@@ -1,0 +1,141 @@
+= Contributing to BeanBand
+:toc:
+
+Thank you for considering contributing to the *BeanBand* project and welcome to
+The Band!  This file introduces you to the basic cornerstones of our project
+and how and where we are currently looking for contributions.
+
+== Priorities
+
+In order to bundle our efforts efficiently, the maintainer has defined the top
+priorities for the near future:
+
+* *High musical quality of the generated playbacks*
+* A stable and extensible architecture
+* Well-defined internal data models
+
+So in addition to the core library modules responsible for the playback
+generation, we will currently only provide rudimentary input and output options
+as a proof of concept, and focus all effort on the music generation logic at
+the heart of *BeanBand*.
+
+That being said, the long-term goals will eventually include
+
+* Additional rendering mechanisms of the playbacks such as audio files or live
+  playback
+* Improved sound quality of the generated playbacks
+* A graphical user interface for editing and playback
+* A more sophisticated file format
+
+But all of these features will have to wait until the musical quality is
+considered to be high enough.
+
+== Target Audience
+
+As mentioned, the maintainer has a very clear vision of the top priorities of
+the project. This means that while, of course, all suggestions and improvements
+are welcome, and everything will be considered and discussed, there should be no
+effort put into other topics as long as the quality standards of the main goals
+are not met. So before you decide to put effort into contributing, please
+consider carefully if this is a project meeting you expectations.
+
+If you are a clean-code enthusiast with little to no interest in music, but a
+strong affinity for modern architectures, solid design patterns and beautiful
+code, we would definitely value your input, but there might actually be other
+project where you would have more fun.
+
+If you are a very experienced and skilled software developer with a strong
+interest in music, you might learn a lot in this project, and your skills would
+definitely be an asset in supporting colleagues with less programming skills.
+
+If you are a very experienced musician, ideally with a strong background in
+music (especially jazz) theory, as well as a strong interest in programming, then we
+need you! Please consider supporting us with your musicological knowledge.
+Don’t worry that your programming skills might not be sufficient, you will get
+any support possible when it comes to software engineering topics.
+
+== Design Decisions
+
+Based on the priorities the maintainer has made some basic design decisions.
+This is to make sure there are no distractions from the main goals. Note,
+however, that these decisions hold for the initial project phases, and might
+well be reconsidered once we expand the scope of our efforts.
+
+Simple input/output architecture::
+  The first implementations will read the user-provided contents from a simple,
+  lightweight text file, and write the output to a standard MIDI file. More
+  sophisticated input/output options will be deferred to later project stages.
+No external dependencies::
+  At least the core modules should have no dependencies on external libraries
+  or resources, and be implemented in pure Java.
+Extension mechanisms using +ServiceLoader+::
+  The main points of extension, and also the primary focus of the development
+  efforts, are new +Arranger+ and new +Band+ implementations. Adding them
+  should be as lightweight as possible. We will use the +ServiceLoader+ class,
+  which is provided by Java natively.
+No extensibility for other components::
+  The core of the project is the music generation library, so instead of
+  providing mechanisms to attach other than the basic +Parser+ and +Renderer+
+  implementations from the proof of concept, the strategy is to embed the core
+  library in more sophisticated and user-friendly solutions later on. Also, all
+  of the internal data models as well as the +Bandleader+ and the +Engineer+
+  will be maintained centrally, and will not provide any extension mechanisms.
+Documentation using javadoc::
+  As an additional step to reduce external dependencies, all technical documentation will
+  be contained in the +javadoc+.
+Testing strategy::
+  The current testing strategy revolves around a set of carefully created and
+  well-documented sample songs to be rendered by *BeanBand*. Unfortunately both
+  the generated MIDI files as well as the logged annotations will need to be
+  verified using human ears and eyes respectively. 
+Namespace::
+  The namespace will be +org.beanband+.
+Logging::
+  We will use +java.util.logging+ throughout, and for simplicity only use the
+  global logger.
+General MIDI standard::
+  Currently we will use MIDI sequences as output format, and adhere to the
+  https://www.midi.org/specifications-old/category/gm-specifications[General
+  MIDI Specifications]. Although this limits the possibilities of the generated
+  playbacks, it provides enough capabilities to focus on the quality of the
+  underlying generation logic.
+
+== Obtaining and Running BeanBand
+
+Since we have no dependencies on any external libraries except a JDK of version
+8 or higher, getting the source code is as simple as cloning the Git
+repository.  Although *BeanBand* was created using the Eclipse IDE, and the
+project files have been committed to the repository, it should be possible to
+implement contributions in any suitable IDE of your choice.
+
+Currently the *BeanBand* core package only comes with a simple command-line
+interface that creates playbacks as MIDI files from lightweight text files
+containing the song definition. The main class is +BeanBand+, please refer to
+the API documentation in the javadoc on how to use it.
+
+== Starting your work
+
+Before you start contributing to *BeanBand* you should get familiar with the
+basic architecture of the system. Please refer to the
+link:doc/Overview.adoc[Technical Documentation] for details.
+
+Once you are familiar with the system, you should decide on where you want to
+put your focus. We have currently two major focus areas for improvements:
+
+Enhance the musical quality::
+  In short, we want better and more intelligent bands. Technically this means
+  that we are looking for new as well as improvements and enhancements to
+  existing +Arranger+ and +Band+ implementations.
+Test song portfolio::
+  In order to test the contributions to *BeanBand* we need a good portfolio of
+  high-quality and well-documented Song Files. Please note that we are not
+  looking for a collection that is as large or comprehensive as possible, but
+  for a select set of songs that together test the limits of the system’s
+  possibilities. Also, since the tests need to be verified manually, the song
+  files should be well documented to define the expected result.
+
+As mentioned previously, both focus areas are not so much software engineering
+challenges, but need a very high degree of musicological knowledge put into
+them. For further information and the current backlog please refer to the
+link:TODO.adoc[TODO] file.
+

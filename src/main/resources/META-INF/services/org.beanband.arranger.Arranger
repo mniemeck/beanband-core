@@ -1,0 +1,4 @@
+org.beanband.arranger.BandArranger
+org.beanband.arranger.basic.FormArranger
+org.beanband.arranger.basic.BassLineArranger
+org.beanband.arranger.basic.GuitarVoicingArranger

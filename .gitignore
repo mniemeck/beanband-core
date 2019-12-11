@@ -1,0 +1,8 @@
+# Eclipse IDE artefacts
+/.classpath
+/.project
+/.settings
+
+# Maven target files
+/target
+

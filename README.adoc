@@ -1,0 +1,52 @@
+= BeanBand
+
+The *BeanBand* project aims to create a high-quality music accompaniment
+software package.  The current focus is to provide a stable architecture that
+focuses primarily on the musical quality of the generated playbacks.
+
+== Description
+
+Accompaniment or playback generation is the process of taking a series of chord
+symbols and other performance-related information, a so-called "leadsheet", and
+trying to automatically create a multi-instrument playback track sounding
+similar to what a real band would play if faced with such a leadsheet,
+excluding the actual solo performer.  This type of software is typically used
+by singers and other soloing instrumentalists who want to practice songs
+together with accompaniment, without the availability of other musicians.
+
+*BeanBand* aims to create yet another playback generation software package as
+an open-source project. Allthough there are some solutions already available,
+even a few FLOSS alternatives, the market is far from being saturated. In
+contrast to other solutions we want to put as much "musical intelligence" as
+possible into the system. That means that we want the user to enter as little
+information as possible, with the system trying to extrapolate all necessary
+information from a very minimalistic leadsheet, and produce high musical
+quality nevertheless. As an example, we want to try the software to
+automatically analyze where musical breaks should occur, without the user
+needing to explicitly specify them.
+
+== Installation and Usage
+
+In this early project stage we do not provide binary builds. Please refer to
+the contribution guidelines on how to install and run the source code.
+
+== Contributing
+
+As a new project we appreciate all contributions to help us evolve our system.
+Be aware however that the maintainer has defined a very strict set of
+priorities for the near future, and based on those has already made some very
+fundamental design decisions. Be sure you carefully read through the guidelines
+detailed in the link:CONTRIBUTING.adoc[CONTRIBUTING] file, and that you
+support, or at least can live with, the conceptual framework defined there.
+After all, we want you to enjoy contributing to *BeanBand*!
+
+== Credits
+
+Michael Niemeck::
+  Creator, maintainer and currently the only active developer.
+
+== License
+
+This project is licensed under the terms of the *GNU GPLv3* license. Please see
+the link:LICENSE.adoc[LICENSE] file for details.
+
