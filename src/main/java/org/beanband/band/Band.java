@@ -6,6 +6,18 @@ import java.util.Collections;
 import java.util.List;
 import java.util.logging.Logger;
 
+/**
+ * {@code Band} implementations are responsible for turning the Song Model and
+ * the Music Model into an actual playback.
+ * 
+ * Note that new instances are created using the {@code ServiceLoader} class, so
+ * implementations must stick to the restrictions imposed by the
+ * {@code ServiceLoader} and must be registered in the in the
+ * {@code META-INF/services/org.beanband.arranger.Arranger} file.
+ * 
+ * @author Michael Niemeck
+ * @see ServiceLoader
+ */
 public abstract class Band {
 
 	private List<Musician> musicians;
@@ -23,7 +35,7 @@ public abstract class Band {
 		}
 		return Collections.unmodifiableList(musicians);
 	}
-	
+
 	private void loadMusicians() {
 		musicians = new ArrayList<>();
 		createMusicians();
@@ -37,11 +49,10 @@ public abstract class Band {
 			}
 		}
 		if (numMusicians > 15) {
-			throw new UnsupportedOperationException(
-					"A band can not register more than 15 non-percussion musicians");
+			throw new UnsupportedOperationException("A band can not register more than 15 non-percussion musicians");
 		}
 	}
-	
+
 	public final LeadMusician getLeadMusician() {
 		if (musicians == null) {
 			loadMusicians();
@@ -54,11 +65,11 @@ public abstract class Band {
 	protected final void addMusician(Musician musician) {
 		musicians.add(musician);
 	}
-	
+
 	protected final void setLeadMusician(LeadMusician musician) {
 		this.leadMusician = musician;
 	}
-	
+
 	protected final void addLeadMusician(Musician musician) {
 		addMusician(musician);
 		if (musician instanceof LeadMusician) {

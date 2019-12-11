@@ -111,13 +111,13 @@ implement contributions in any suitable IDE of your choice.
 Currently the *BeanBand* core package only comes with a simple command-line
 interface that creates playbacks as MIDI files from lightweight text files
 containing the song definition. The main class is +BeanBand+, please refer to
-the API documentation in the javadoc on how to use it.
+the API documentation in the _javadoc_ on how to use it.
 
 == Starting your work
 
 Before you start contributing to *BeanBand* you should get familiar with the
-basic architecture of the system. Please refer to the
-link:doc/Overview.adoc[Technical Documentation] for details.
+basic architecture of the system. Please refer to the Technical Documentation
+contained in the _javadoc_ for details.
 
 Once you are familiar with the system, you should decide on where you want to
 put your focus. We have currently two major focus areas for improvements:
