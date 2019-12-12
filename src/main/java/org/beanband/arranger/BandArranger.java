@@ -83,9 +83,7 @@ public class BandArranger extends Arranger {
 	private Map<String, Band> createBandMap() {
 		Map<String, Band> bandMap = new HashMap<>();
 		ServiceLoader<Band> serviceLoader = ServiceLoader.load(Band.class);
-		serviceLoader.forEach(b -> {
-			bandMap.put(b.getStyleName(), b);
-		});
+		serviceLoader.forEach(b -> bandMap.put(b.getStyleName(), b));
 		if (bandMap.isEmpty()) {
 			throw new UnsupportedOperationException("No Bands found. Unable to render playbacks.");
 		}

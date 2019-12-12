@@ -1,6 +1,6 @@
 package org.beanband.engineer;
 
-import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Collection;
 
@@ -28,7 +28,7 @@ import org.beanband.model.midi.MidiTrack;
 public class Engineer {
 
 	private static final int PPQ_RESOLUTION = 960;
-	private static final int INSTRUMENT_CHANNEL[] = { 0, 1, 2, 3, 4, 5, 6, 7, 8, 10, 11, 12, 13, 14, 15 };
+	private static final int[] INSTRUMENT_CHANNEL = { 0, 1, 2, 3, 4, 5, 6, 7, 8, 10, 11, 12, 13, 14, 15 };
 	private static final int PERCUSSION_CHANNEL = 9;
 
 	/**
@@ -50,8 +50,8 @@ public class Engineer {
 
 		long tickOffset = 0;
 		long currentMsPerBeat = 0;
-		InstrumentPatch patchList[] = new InstrumentPatch[15];
-		Track trackList[] = new Track[15];
+		InstrumentPatch[] patchList = new InstrumentPatch[15];
+		Track[] trackList = new Track[15];
 
 		for (MidiBar midiBar : midiSong.getBars()) {
 			long ticksPerBar = midiBar.getTicksPerBar(PPQ_RESOLUTION);
@@ -111,7 +111,7 @@ public class Engineer {
 	
 	private MidiEvent createLyricEvent(String text, long tick) throws InvalidMidiDataException {
 		byte lyricType = 0x05;
-		byte[] lyrics = text.getBytes(Charset.forName("UTF-8"));
+		byte[] lyrics = text.getBytes(StandardCharsets.UTF_8);
 		MidiMessage midiMessage = new MetaMessage(lyricType, lyrics, lyrics.length);
 		return new MidiEvent(midiMessage, tick);
 	}

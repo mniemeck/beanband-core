@@ -70,6 +70,6 @@ public abstract class Arranger implements Comparable<Arranger> {
 	 */
 	protected int getPriority() {
 		return DEFAULT_PRIORITY;
-	};
+	}
 
 }

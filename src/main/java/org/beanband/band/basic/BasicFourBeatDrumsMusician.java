@@ -24,7 +24,7 @@ import org.beanband.model.song.Bar;
  *
  */
 public class BasicFourBeatDrumsMusician extends PercussionMusician implements LeadMusician {
-	private final static double COUNT_IN_BEATS = 8;
+	private static final double COUNT_IN_BEATS = 8;
 
 	@Override
 	protected void createElements(Bar bar) throws InvalidMidiDataException {

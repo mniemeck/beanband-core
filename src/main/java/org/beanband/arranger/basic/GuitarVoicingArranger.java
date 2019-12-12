@@ -63,7 +63,7 @@ public class GuitarVoicingArranger extends Arranger {
 			voicingAnnotation.addNotePitch(Type.GUITAR_BASIC, new NotePitch(currentStringPitch + 1));
 		} else if (chord.getFifth() == Fifth.PERFECT) {
 			voicingAnnotation.addNotePitch(Type.GUITAR_BASIC, new NotePitch(currentStringPitch + 2));
-		} else if (chord.getFifth() == Fifth.PERFECT) {
+		} else if (chord.getFifth() == Fifth.AUG) {
 			voicingAnnotation.addNotePitch(Type.GUITAR_BASIC, new NotePitch(currentStringPitch + 3));
 		}
 		currentStringPitch += 5;

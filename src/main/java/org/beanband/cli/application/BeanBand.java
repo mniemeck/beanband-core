@@ -51,7 +51,7 @@ public class BeanBand {
 	}
 
 	private File[] processCommandline(String[] args) {
-		File files[] = new File[2];
+		File[] files = new File[2];
 
 		if (args.length < 2) {
 			logger.severe("Usage: java -jar BeanBand.jar <infile> <outfile>");
