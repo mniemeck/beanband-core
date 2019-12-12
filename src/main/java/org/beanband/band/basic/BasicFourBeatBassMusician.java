@@ -29,23 +29,30 @@ public class BasicFourBeatBassMusician extends Musician {
 
 	@Override
 	protected void createElements(Bar bar) throws InvalidMidiDataException {
-		if (!bar.getChords().isEmpty()) {
-			NotePitch bassNote = extractBassNote(bar.getChords().get(0));
-			if (bassNote != null) {
-				addElement(new MidiNoteElement(bassNote, 0.0, 0.28125, 120, 127));
-				addElement(new MidiNoteElement(bassNote, 0.375, 0.09375, 100, 127));
-			}
-			if (bar.getChords().size() > 1) {
-				NotePitch bassNote2 = extractBassNote(bar.getChords().get(1));
-				if (bassNote2 != null) {
-					addElement(new MidiNoteElement(bassNote2, 0.5, 0.28125, 120, 127));
-					addElement(new MidiNoteElement(bassNote2, 0.875, 0.09375, 100, 127));
-				}
-			} else {
-				if (bassNote != null) {
-					addElement(new MidiNoteElement(bassNote, 0.5, 0.375, 120, 127));
-				}
-			}
+		switch (bar.getChords().size()) {
+		case 1:
+			addStrongHalfBar(bar.getChords().get(0), 0.0);
+			addWeakHalfBar(bar.getChords().get(0), 0.5);
+			break;
+		case 2:
+			addStrongHalfBar(bar.getChords().get(0), 0.0);
+			addStrongHalfBar(bar.getChords().get(1), 0.5);
+			break;
+		}
+	}
+	
+	private void addStrongHalfBar(Chord chord, double start) throws InvalidMidiDataException {
+		NotePitch bassNote = extractBassNote(chord);
+		if (bassNote != null) {
+			addElement(new MidiNoteElement(bassNote, start + 0.0, 0.375 * 0.75, 120, 127));
+			addElement(new MidiNoteElement(bassNote, start + 0.375, 0.125 * 0.75, 100, 127));
+		}
+	}
+
+	private void addWeakHalfBar(Chord chord, double start) throws InvalidMidiDataException {
+		NotePitch bassNote = extractBassNote(chord);
+		if (bassNote != null) {
+			addElement(new MidiNoteElement(bassNote, start + 0.0, 0.375 * 0.75, 122, 127));
 		}
 	}
 
