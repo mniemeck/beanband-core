@@ -18,7 +18,6 @@ public class NotePitch extends Pitch {
 	private final Note note;
 	private final int octave;
 
-// static final list of default notes per pitch. use for reverse const.
 	/**
 	 * Constructs an new {@code NotePitch} object.
 	 * 
@@ -47,6 +46,15 @@ public class NotePitch extends Pitch {
 		this.octave = octave;
 	}
 
+	/**
+	 * Constructs a new {@code NotePitch} object based on a pitch value. The
+	 * {@code Note} and octave value are calculated. Note that for enharmonics,
+	 * always the sharp {@code Note} will be chosen.
+	 * 
+	 * @param pitch The pitch value.
+	 * @throws InvalidMidiDataException When the pitch value is outside the allowed
+	 *                                  range (0-127).
+	 */
 	public NotePitch(int pitch) throws InvalidMidiDataException {
 		if ((pitch < 0) && (pitch > 127)) {
 			throw new InvalidMidiDataException(
@@ -61,10 +69,20 @@ public class NotePitch extends Pitch {
 		return this.note.getNumber() + (this.octave * 12);
 	}
 
+	/**
+	 * Returns the {@code Note} value defining this {@code NotePitch}.
+	 * 
+	 * @return The {@code Note} value defining this {@code NotePitch}.
+	 */
 	public Note getNote() {
 		return note;
 	}
 
+	/**
+	 * Returns the octave value defining this {@code NotePitch}.
+	 * 
+	 * @return The octave value defining this {@code NotePitch}.
+	 */
 	public int getOctave() {
 		return octave;
 	}

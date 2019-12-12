@@ -21,12 +21,16 @@ import org.beanband.model.song.Song;
  * <li>{@link Bandleader}
  * <li>{@link MidiFileRenderer}
  * </ul>
+ * {@code BeanBand} takes two commandline arguments, one source file containing
+ * the song definition, and one target file, where the MIDI sequence will be
+ * written two. The resulting MIDI file can be directly rendered with any
+ * suitable MIDI player software.
  * 
  * @author Michael Niemeck
  *
  */
 public class BeanBand {
-	private final Logger logger = Logger.getGlobal();
+	private final Logger logger = Logger.getLogger(Bandleader.LOGGER_NAME);
 
 	private BeanBand() {
 		// Class should not be instatiated from outside.
@@ -48,7 +52,7 @@ public class BeanBand {
 
 	private File[] processCommandline(String[] args) {
 		File files[] = new File[2];
-		
+
 		if (args.length < 2) {
 			logger.severe("Usage: java -jar BeanBand.jar <infile> <outfile>");
 			return null;
@@ -62,7 +66,7 @@ public class BeanBand {
 			return null;
 		}
 		logger.config("Commandline processed: Infile=" + files[0].getPath() + " Outfile=" + files[1].getPath());
-		
+
 		return files;
 	}
 

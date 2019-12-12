@@ -24,8 +24,8 @@ That being said, the long-term goals will eventually include
 * Additional rendering mechanisms of the playbacks such as audio files or live
   playback
 * Improved sound quality of the generated playbacks
-* A graphical user interface for editing and playback
-* A more sophisticated file format
+* A graphical user interface for editing song information and rendering playback
+* A more sophisticated file format for song information
 
 But all of these features will have to wait until the musical quality is
 considered to be high enough.
@@ -42,7 +42,7 @@ consider carefully if this is a project meeting you expectations.
 If you are a clean-code enthusiast with little to no interest in music, but a
 strong affinity for modern architectures, solid design patterns and beautiful
 code, we would definitely value your input, but there might actually be other
-project where you would have more fun.
+projects where you would have more fun.
 
 If you are a very experienced and skilled software developer with a strong
 interest in music, you might learn a lot in this project, and your skills would
@@ -74,7 +74,7 @@ Extension mechanisms using +ServiceLoader+::
   should be as lightweight as possible. We will use the +ServiceLoader+ class,
   which is provided by Java natively.
 No extensibility for other components::
-  The core of the project is the music generation library, so instead of
+  The core of the current project is the music generation library, so instead of
   providing mechanisms to attach other than the basic +Parser+ and +Renderer+
   implementations from the proof of concept, the strategy is to embed the core
   library in more sophisticated and user-friendly solutions later on. Also, all
@@ -85,14 +85,15 @@ Documentation using javadoc::
   be contained in the +javadoc+.
 Testing strategy::
   The current testing strategy revolves around a set of carefully created and
-  well-documented sample songs to be rendered by *BeanBand*. Unfortunately both
-  the generated MIDI files as well as the logged annotations will need to be
-  verified using human ears and eyes respectively. 
+  well-documented sample songs to be rendered by *BeanBand* as a form of
+  integration test. Unfortunately both the generated MIDI files as well as the
+  logged annotations will need to be verified using human ears and eyes
+  respectively. 
 Namespace::
   The namespace will be +org.beanband+.
 Logging::
-  We will use +java.util.logging+ throughout, and for simplicity only use the
-  global logger.
+  We will use +java.util.logging+ throughout, and use one named +Logger+
+  throughout the library.
 General MIDI standard::
   Currently we will use MIDI sequences as output format, and adhere to the
   https://www.midi.org/specifications-old/category/gm-specifications[General
@@ -102,22 +103,21 @@ General MIDI standard::
 
 == Obtaining and Running BeanBand
 
-Since we have no dependencies on any external libraries except a JDK of version
-8 or higher, getting the source code is as simple as cloning the Git
-repository.  Although *BeanBand* was created using the Eclipse IDE, and the
-project files have been committed to the repository, it should be possible to
-implement contributions in any suitable IDE of your choice.
+Since we have no dependencies on any external libraries ao far, except a JDK
+of version 8 or higher, getting the source code is as simple as cloning the Git
+repository. *BeanBand* sticks to the Maven Standard Directory Layout, so you
+should be able to import it into the IDE of your choice.
 
 Currently the *BeanBand* core package only comes with a simple command-line
 interface that creates playbacks as MIDI files from lightweight text files
 containing the song definition. The main class is +BeanBand+, please refer to
-the API documentation in the javadoc on how to use it.
+the API documentation in the +javadoc+ on how to use it.
 
 == Starting your work
 
 Before you start contributing to *BeanBand* you should get familiar with the
-basic architecture of the system. Please refer to the
-link:doc/Overview.adoc[Technical Documentation] for details.
+basic architecture of the system. Please refer to the Technical Documentation
+contained in the +javadoc+ for details.
 
 Once you are familiar with the system, you should decide on where you want to
 put your focus. We have currently two major focus areas for improvements:

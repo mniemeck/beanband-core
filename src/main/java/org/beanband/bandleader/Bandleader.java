@@ -59,6 +59,12 @@ import org.beanband.model.song.StyleChange;
 public class Bandleader {
 
 	/**
+	 * The name of the {@code Logger} to use throughout the library. Use
+	 * {@code Logger.getLogger(Bandleader.LOGGER_NAME)} to acccess is.
+	 */
+	public static final String LOGGER_NAME = "org.beanband";
+
+	/**
 	 * Renders the specified {@code Song} into a {@code Sequence} by calling the
 	 * various stages of the <em>BeanBand</em>.
 	 * 
@@ -69,7 +75,7 @@ public class Bandleader {
 	 */
 	public Sequence perform(Song song) throws InvalidMidiDataException {
 		arrange(song);
-		logWarnings(song, Logger.getGlobal());
+		logWarnings(song, Logger.getLogger(LOGGER_NAME));
 		MidiSong midiSong = play(song);
 		Sequence sequence = assemble(midiSong);
 		return sequence;
@@ -144,7 +150,7 @@ public class Bandleader {
 		}
 		return midiSong;
 	}
-	
+
 	private String getBarLabel(Bar bar) {
 		String label = "|";
 		for (Chord chord : bar.getChords()) {

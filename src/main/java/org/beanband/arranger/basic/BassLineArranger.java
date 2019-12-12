@@ -11,6 +11,16 @@ import org.beanband.model.song.Chord;
 import org.beanband.model.song.Note;
 import org.beanband.model.song.Song;
 
+/**
+ * Calculates pitches to be played on a (double) bass to form a bass line.
+ * Currently, only the bass note is calculated (i.e. the bass note or the root
+ * note is taken from the chord) in a way that it stays within a defined range
+ * and minimizes large intervals.
+ * 
+ * @author Michael Niemeck
+ * @see VoicingAnnotation
+ * @see VoicingAnnotation.Type#BASS_BASIC
+ */
 public class BassLineArranger extends Arranger {
 
 	@Override
@@ -23,7 +33,8 @@ public class BassLineArranger extends Arranger {
 			for (Chord chord : bar.getChords()) {
 				Note note = (chord.getBass() != null ? chord.getBass() : chord.getRoot());
 				if (note != null) {
-					NotePitch notePitch = movePitchInRange(getNearestPitch(note, referencePitch), lowestPitch, highestPitch);
+					NotePitch notePitch = movePitchInRange(getNearestPitch(note, referencePitch), lowestPitch,
+							highestPitch);
 					chord.getOrCreateAnnotation(VoicingAnnotation.class).addNotePitch(Type.BASS_BASIC, notePitch);
 					referencePitch = notePitch;
 				}
@@ -43,7 +54,7 @@ public class BassLineArranger extends Arranger {
 
 	private NotePitch movePitchInRange(NotePitch pitch, NotePitch lowestPitch, NotePitch highesPitch)
 			throws InvalidMidiDataException {
-		
+
 		NotePitch newPitch = pitch;
 		while (newPitch.getPitch() < lowestPitch.getPitch()) {
 			newPitch = new NotePitch(newPitch.getNote(), newPitch.getOctave() + 1);

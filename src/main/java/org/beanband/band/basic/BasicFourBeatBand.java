@@ -2,6 +2,13 @@ package org.beanband.band.basic;
 
 import org.beanband.band.Band;
 
+/**
+ * A very basic combo playing a standard four-beat groove. Currently this is
+ * just a showcase implementation to spark further development.
+ * 
+ * @author Michael Niemeck
+ *
+ */
 public class BasicFourBeatBand extends Band {
 	private final static String STYLE_NAME = "BasicFourBeat";
 	private final static double BEATS_PER_BAR = 4;

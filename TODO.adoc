@@ -13,9 +13,11 @@ well-documented Song Files to enrich our test portfolio.
 In addition to the official Backlog we use +TODO+ and +FIXME+ annotations
 directly in the Java code to mark all areas where immediate work is required.
 
+Also the code should be kept free of any warnings and in general as clean as
+possible.
+
 == Backlog
 
-* Complete javadoc
 * Create new basic Arrangers
  ** Create +PianoVoicingArranger+ that calculates one or more piano voicings.
  ** Create +ScaleArranger+ (and +ScaleAnnotation+) that calculates (octave-independent) scales, bass- and root-notes, lead notes, function notes etc.
@@ -24,7 +26,7 @@ directly in the Java code to mark all areas where immediate work is required.
  ** Enhance +FormArranger+ to actually detect formal features of the leadsheet, like intros, chorusses, bridges, breaks, etc. 
 * Enhance BasicFourBeatBand to form a full showcase/reference implementation
  ** Create BasicFourBeatPianoMusician
- ** Improve existing Musicians
+ ** Clean up and improve existing Musicians
  ** Support four changes per bar
  ** Continuously improve existing Arrangers and Musicians
 * Add new Bands

@@ -4,20 +4,22 @@
     <title>BeanBand Technicel Documentation</title>
   </head>
   <body>
-    Welcome to the technical documentation of <strong>BeanBand</strong> core
+    Welcome to the technical documentation of the <strong>BeanBand</strong> core
     library. The core library, together with the sample input and output
     module, processes the user-generated song information to produce a
-    human-hearable playback track.  It consists of three internal data models,
+    human-hearable playback track. It consists of three internal data models,
     five processing stages, one standard class ({@code Sequence}), and the
     orchestration module {@code Bandleader}. The stages are processed in the
     following order:
     <ol>
-      <li> The <em>Parser</em> {@code org.beanband.cli.parser}</li>
-      <li> The <em>Song Model</em> {@code org.beanband.model.song}</li>
-      <li> One or more <em>Arranger</em> implementations from {@code org.beanband.arranger}</li>
-      <li> The <em>Music Model</em> {@code org.beanband.model.music}</li>
-      <li> One or more <em>Band</em> implementations from {@code org.beanband.band} </li>
-      <li> The <em>MIDI Model</em> {@code org.beanband.model.midi}</li>
+      <li>The <em>Parser</em> {@code org.beanband.cli.parser}</li>
+      <li>The <em>Song Model</em> {@code org.beanband.model.song}</li>
+      <li>One or more <em>Arranger</em> implementations from {@code
+        org.beanband.arranger}</li>
+      <li>The <em>Music Model</em> {@code org.beanband.model.music}</li>
+      <li>One or more <em>Band</em> implementations from {@code
+        org.beanband.band}</li>
+      <li>The <em>MIDI Model</em> {@code org.beanband.model.midi}</li>
       <li>The <em>Engineer</em> {@code org.beanband.engineer}</li>
       <li>A <em>Sequence</em> {@code javax.sound.midi.Sequence}</li>
       <li>The <em>Renderer</em> {@code org.beanband.cli.renderer}</li>
@@ -28,9 +30,10 @@
     <p><strong>Arrangers and Bands</strong></p>
 
     One point that needs to be emphasized is the separation of concerns between
-    {@code Arranger} and {@code Band}. Since this is one of the most crucial architectural
-    decisions, and the major key (no pun intended) to extensibility, always
-    stick to the following guidelines when contributing to <strong>BeanBand</strong>.
+    {@code Arranger} and {@code Band}. Since this is one of the most crucial
+    architectural decisions, and the major key (no pun intended) to
+    extensibility, always stick to the following guidelines when contributing
+    to <strong>BeanBand</strong>.
 
     <ul>
       <li>{@code Band} and {@code Arranger} implementations should be developed
@@ -41,14 +44,13 @@
         user-provided song information with <em>musicological information</em>.
         They make no assumptions on, or suggestions for, the actual performance
         of the music.</li>
-      <li><strong>Bands</strong>, or more
-        specifically <strong>Musicians</strong>, are responsible for
-        transforming the song, including the annotations from the Arrangers,
-        into actual music.  Every Musician is typically responsible for a
-        single instrument, and has complete freedom on how to interpret the
-        musical information.</li>
+      <li><strong>Bands</strong>, or more specifically
+        <strong>Musicians</strong>, are responsible for transforming the song,
+        including the annotations from the Arrangers, into actual music. Every
+        Musician is typically responsible for a single instrument, and has
+        complete freedom on how to interpret the musical information.</li>
       <li>The <strong>Music Model</strong> is on purpose not designed to be
-        dynamically extensible.  You should only extend the Music Model when
+        dynamically extensible. You should only extend the Music Model when
         you have a new type of musicological information to add.</li>
       <li>The <strong>Song Model</strong> should be kept a simple as possible at
         all costs. The basic design idea of <strong>BeanBand</strong> is to have
@@ -56,24 +58,26 @@
         as little information as possible. For example, instead of making more
         style changes available in the Song Model, have the Band change it's
         style dynamically.</li>
-      <li>Create a new Arranger, when you have a new type of musicological information
-        to calculate (you might need an extension of the Music Model as well).</li>
-      <li>Enhance an existing Arranger if you have a more clever way of calculating
-        existing musicological information.</li>
+      <li><em>Create a new Arranger</em>, when you have a new type of
+        musicological information to calculate (you might need an extension of
+        the Music Model as well).</li>
+      <li><em>Enhance an existing Arranger</em> if you have a more clever way
+        of calculating existing musicological information.</li>
       <li> You can also create a new Arranger with a lower priority to
-        overwrite existing information. That might make sense if you want to
+        overwrite existing annotations. That might make sense if you want to
         build on the results from multiple higher-priority Arrangers.</li>
-      <li>Create a new Band when you want to implement a new style of playing.
+      <li><em>Create a new Band</em> when you want to implement a new style of playing.
         Since the Band needs to be selected explicitly by the user, don't
         create new Bands for slight variations. Rather, enhance an existing
         Band to put variations into their performance automatically.</li>
-      <li>Enhancing Bands to render better performances based on the same Song
-        Model is the core of the <strong>BeanBand</strong> idea. Whenever in
-        doubt, improving the music generation algorithms inside a Band is the
-        way to go!</li>
-      <li>As a general rule-of-thumb, put calculations that are relevant to
-        multiple Bands and are independent of a specific style into Arrangers.
-        Put specific calculations into Musicians.</li>
+      <li><em>Enhance existing Bands</em> to render better performances based
+        on the same Song Model. This is the core of the
+        <strong>BeanBand</strong> idea. Whenever in doubt, improving the music
+        generation algorithms inside a Band is the way to go!</li>
+      <li>As a general rule-of-thumb, put calculations of information that is
+        relevant to all Bands and is independent of a specific style into
+        Arrangers. Put other calculations into Musicians (or one of the
+        superclasses).</li>
     </ul>
 
     @author Michael Niemeck

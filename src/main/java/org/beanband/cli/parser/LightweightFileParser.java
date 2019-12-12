@@ -12,6 +12,7 @@ import java.util.logging.Logger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import org.beanband.bandleader.Bandleader;
 import org.beanband.model.song.Bar;
 import org.beanband.model.song.Chord;
 import org.beanband.model.song.Eleventh;
@@ -100,7 +101,7 @@ public class LightweightFileParser {
 		Map<Pattern, Consumer<Chord>> map = new HashMap<>();
 
 		map.put(Pattern.compile("^$"), c -> {
-			Logger.getGlobal().fine("Blank line encountered. Empty chord will be added.");
+			Logger.getLogger(Bandleader.LOGGER_NAME).fine("Blank line encountered. Empty chord will be added.");
 		});
 
 		notes.forEach((s, n) -> {
@@ -236,6 +237,6 @@ public class LightweightFileParser {
 				return;
 			}
 		}
-		Logger.getGlobal().warning("Pattern " + chordComponent + " could not be interpreted");
+		Logger.getLogger(Bandleader.LOGGER_NAME).warning("Pattern " + chordComponent + " could not be interpreted");
 	}
 }
