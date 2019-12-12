@@ -29,31 +29,67 @@ public class BasicFourBeatDrumsMusician extends PercussionMusician implements Le
 	@Override
 	protected void createElements(Bar bar) throws InvalidMidiDataException {
 		FormAnnotation annotation = bar.getAnnotation(FormAnnotation.class);
-		if ((annotation != null) && (annotation.isNoChord())) {
+		if ((annotation != null) && annotation.isNoChord()) {
 			addElement(new MidiPercussionElement(PercussionKey.ACOUSTIC_BASS_DRUM, 0.0, 120, 127));
 			addElement(new MidiPercussionElement(PercussionKey.ACOUSTIC_SNARE, 0.625, 120, 127));
 			addElement(new MidiPercussionElement(PercussionKey.ACOUSTIC_SNARE, 0.75, 120, 127));
 		} else {
-			addElement(new MidiPercussionElement(PercussionKey.CLOSED_HI_HAT, 0.0, 90, 127));
-			addElement(new MidiPercussionElement(PercussionKey.CLOSED_HI_HAT, 0.125, 90, 127));
-			addElement(new MidiPercussionElement(PercussionKey.CLOSED_HI_HAT, 0.25, 90, 127));
-			if (bar.getChords().size() > 1) {
-				addElement(new MidiPercussionElement(PercussionKey.OPEN_HI_HAT, 0.375, 90, 127));
-			} else {
-				addElement(new MidiPercussionElement(PercussionKey.CLOSED_HI_HAT, 0.375, 90, 127));
+			switch (bar.getChords().size()) {
+			case 1:
+				addKickStrongHalfBar(0.0);
+				addSnareWeakHalfBar(0.0);
+				addHiHatWeakHalfBar(0.0);
+	
+				addKickWeakHalfBar(0.5);
+				addSnareWeakHalfBar(0.5);
+				addHiHatStrongHalfBar(0.5);
+				break;
+			case 2:
+				addKickStrongHalfBar(0.0);
+				addSnareWeakHalfBar(0.0);
+				addHiHatStrongHalfBar(0.0);
+	
+				addKickStrongHalfBar(0.5);
+				addSnareStrongHalfBar(0.5);
+				addHiHatStrongHalfBar(0.5);
+				break;
 			}
-			addElement(new MidiPercussionElement(PercussionKey.CLOSED_HI_HAT, 0.5, 90, 127));
-			addElement(new MidiPercussionElement(PercussionKey.CLOSED_HI_HAT, 0.625, 90, 127));
-			addElement(new MidiPercussionElement(PercussionKey.CLOSED_HI_HAT, 0.75, 90, 127));
-			addElement(new MidiPercussionElement(PercussionKey.OPEN_HI_HAT, 0.875, 90, 127));
-			addElement(new MidiPercussionElement(PercussionKey.ACOUSTIC_BASS_DRUM, 0.0, 120, 127));
-			addElement(new MidiPercussionElement(PercussionKey.ACOUSTIC_BASS_DRUM, 0.5, 110, 127));
-			addElement(new MidiPercussionElement(PercussionKey.ACOUSTIC_SNARE, 0.25, 110, 127));
-			addElement(new MidiPercussionElement(PercussionKey.ACOUSTIC_SNARE, 0.75, 110, 127));
 		}
-		if ((annotation != null) && (annotation.isLastBar())) {
+		if ((annotation != null) && annotation.isLastBar()) {
 			addElement(new MidiPercussionElement(PercussionKey.CRASH_CYMBAL_1, 1.0, 120, 127));
 		}
+	}
+
+	private void addKickStrongHalfBar(double start) throws InvalidMidiDataException {
+		addElement(new MidiPercussionElement(PercussionKey.ACOUSTIC_BASS_DRUM, start, 120, 127));
+		addElement(new MidiPercussionElement(PercussionKey.ACOUSTIC_BASS_DRUM, start + 0.375, 100, 127));
+	}
+
+	private void addKickWeakHalfBar(double start) throws InvalidMidiDataException {
+		addElement(new MidiPercussionElement(PercussionKey.ACOUSTIC_BASS_DRUM, start, 110, 127));
+	}
+
+	private void addSnareWeakHalfBar(double start) throws InvalidMidiDataException {
+		addElement(new MidiPercussionElement(PercussionKey.ACOUSTIC_SNARE, start + 0.25, 110, 127));
+	}
+
+	private void addSnareStrongHalfBar(double start) throws InvalidMidiDataException {
+		addElement(new MidiPercussionElement(PercussionKey.ACOUSTIC_SNARE, start + 0.25, 110, 127));
+		addElement(new MidiPercussionElement(PercussionKey.ACOUSTIC_SNARE, start + 0.375, 90, 127));
+	}
+
+	private void addHiHatWeakHalfBar(double start) throws InvalidMidiDataException {
+		addElement(new MidiPercussionElement(PercussionKey.CLOSED_HI_HAT, start + 0.0, 100, 127));
+		addElement(new MidiPercussionElement(PercussionKey.CLOSED_HI_HAT, start + 0.125, 90, 127));
+		addElement(new MidiPercussionElement(PercussionKey.CLOSED_HI_HAT, start + 0.25, 92, 127));
+		addElement(new MidiPercussionElement(PercussionKey.CLOSED_HI_HAT, start + 0.375, 91, 127));
+	}
+
+	private void addHiHatStrongHalfBar(double start) throws InvalidMidiDataException {
+		addElement(new MidiPercussionElement(PercussionKey.CLOSED_HI_HAT, start + 0.0, 110, 127));
+		addElement(new MidiPercussionElement(PercussionKey.CLOSED_HI_HAT, start + 0.125, 91, 127));
+		addElement(new MidiPercussionElement(PercussionKey.CLOSED_HI_HAT, start + 0.25, 90, 127));
+		addElement(new MidiPercussionElement(PercussionKey.OPEN_HI_HAT, start + 0.375, 92, 127));
 	}
 
 	@Override

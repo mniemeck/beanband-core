@@ -29,26 +29,33 @@ public class BasicFourBeatGuitarMusician extends Musician {
 
 	@Override
 	protected void createElements(Bar bar) throws InvalidMidiDataException {
-		if (!bar.getChords().isEmpty()) {
-			List<NotePitch> voicing = extractGuitarVoicing(bar.getChords().get(0));
-			if (bar.getChords().size() == 1) {
-				for (NotePitch notePitch : voicing) {
-					addElement(new MidiNoteElement(notePitch, 0.0, 0.375, 80, 127));
-					addElement(new MidiNoteElement(notePitch, 0.5, 0.375, 65, 127));
-				}
-			} else {
-				List<NotePitch> voicing2 = extractGuitarVoicing(bar.getChords().get(1));
-				for (NotePitch notePitch : voicing) {
-					addElement(new MidiNoteElement(notePitch, 0.0, 0.1875, 80, 127));
-					addElement(new MidiNoteElement(notePitch, 0.25, 0.1875, 50, 127));
-				}
-				for (NotePitch notePitch : voicing2) {
-					addElement(new MidiNoteElement(notePitch, 0.5, 0.1875, 80, 127));
-					addElement(new MidiNoteElement(notePitch, 0.75, 0.1875, 50, 127));
-				}
-			}
+		switch (bar.getChords().size()) {
+		case 1:
+			addFullBar(bar.getChords().get(0), 0.0);
+			break;
+		case 2:
+			addHalfBar(bar.getChords().get(0), 0.0);
+			addHalfBar(bar.getChords().get(1), 0.5);
+			break;
 		}
 	}
+		
+	private void addFullBar(Chord chord, double start) throws InvalidMidiDataException {
+		List<NotePitch> voicing = extractGuitarVoicing(chord);
+		for (NotePitch notePitch : voicing) {
+			addElement(new MidiNoteElement(notePitch, start + 0.0, 0.5 * 0.75, 80, 127));
+			addElement(new MidiNoteElement(notePitch, start + 0.5, 0.5 * 0.75, 65, 127));
+		}
+	}
+
+	private void addHalfBar(Chord chord, double start) throws InvalidMidiDataException {
+		List<NotePitch> voicing = extractGuitarVoicing(chord);
+		for (NotePitch notePitch : voicing) {
+			addElement(new MidiNoteElement(notePitch, start + 0.0, 0.25 * 0.75, 82, 127));
+			addElement(new MidiNoteElement(notePitch, start + 0.25, 0.25 * 0.75, 50, 127));
+		}
+	}
+
 
 	private List<NotePitch> extractGuitarVoicing(Chord chord) {
 		VoicingAnnotation voicingAnnotation = chord.getAnnotation(VoicingAnnotation.class);
