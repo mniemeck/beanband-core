@@ -14,9 +14,17 @@ import org.beanband.model.midi.PercussionKey;
 import org.beanband.model.music.FormAnnotation;
 import org.beanband.model.song.Bar;
 
+/**
+ * The drummer of our showcase band. It plays a simple straight four-beat groove
+ * with a slight variation based on the number of changes per bar. Also has a
+ * special groove for N.C. bars. In addition, as a {@code LeadMusician}, it can
+ * render the classic two-bar count-in.
+ * 
+ * @author Michael Niemeck
+ *
+ */
 public class BasicFourBeatDrumsMusician extends PercussionMusician implements LeadMusician {
 	private final static double COUNT_IN_BEATS = 8;
-
 
 	@Override
 	protected void createElements(Bar bar) throws InvalidMidiDataException {

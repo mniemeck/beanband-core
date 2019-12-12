@@ -7,6 +7,17 @@ import org.beanband.model.music.FormAnnotation;
 import org.beanband.model.song.Bar;
 import org.beanband.model.song.Song;
 
+/**
+ * The {@code Form Arranger} should analyze the song (e.g. by counting bars,
+ * analyzing the chord changes, finding repetitions, maybe even doing a
+ * functional analysis of the harmonies) and annotate formal features on a
+ * bar-level. Currently, only the last bar of the song is annotated, and bars
+ * with no chords are marked.
+ * 
+ * @author Michael Niemeck
+ * @see FormAnnotation
+ *
+ */
 public class FormArranger extends Arranger {
 
 	@Override

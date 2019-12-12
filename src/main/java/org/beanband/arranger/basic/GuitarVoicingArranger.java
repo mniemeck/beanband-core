@@ -17,6 +17,22 @@ import org.beanband.model.song.Song;
 import org.beanband.model.song.Third;
 import org.beanband.model.song.Thirteenth;
 
+/**
+ * Calculates pitches to be played on a guitar for a given chord. The algorithm is still rather
+ * simplistic, but it will produce chords that sound reasonably realistic. It is
+ * based on three basic chords (Fmaj, Bbmaj, Ebmaj) with the root at the first,
+ * second or third string respectively. Based on the root of the desired chord the
+ * nearest standard basic chord is picked and transposed by sliding upwards.
+ * Then the strings are processed lowest to highest to change ptich to some of
+ * the options of the chord in a way that is anatomically at least somewhat
+ * reasonable (not all have been tested by an actual gutarist). Also, little
+ * musicological preferences are implemented, on which options to realize and
+ * which to leave out.
+ * 
+ * @author Michael Niemeck
+ * @see VoicingAnnotation
+ * @see VoicingAnnotation.Type#GUITAR_BASIC
+ */
 public class GuitarVoicingArranger extends Arranger {
 
 	@Override
@@ -89,7 +105,7 @@ public class GuitarVoicingArranger extends Arranger {
 			voicingAnnotation.addNotePitch(Type.GUITAR_BASIC, new NotePitch(currentStringPitch));
 		}
 	}
-	
+
 	private void createType2Voicing(Chord chord, int offset) throws InvalidMidiDataException {
 		VoicingAnnotation voicingAnnotation = chord.getOrCreateAnnotation(VoicingAnnotation.class);
 		int currentStringPitch = 40 + offset;

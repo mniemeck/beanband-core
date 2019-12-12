@@ -41,7 +41,7 @@ public class BeanBandIntegrationTest {
 	 * properties of the global {@code Logger}.
 	 */
 	public BeanBandIntegrationTest() {
-		logger = Logger.getGlobal();
+		logger = Logger.getLogger(Bandleader.LOGGER_NAME);
 		logger.setLevel(Level.ALL);
 		Handler handler = new ConsoleHandler();
 		handler.setLevel(Level.ALL);

@@ -13,6 +13,13 @@ import org.beanband.model.music.VoicingAnnotation.Type;
 import org.beanband.model.song.Bar;
 import org.beanband.model.song.Chord;
 
+/**
+ * The bass player of our showcase band. It will play just the bass note in a
+ * slightly varying rhythm based on the number of changes per bar.
+ * 
+ * @author Michael Niemeck
+ *
+ */
 public class BasicFourBeatBassMusician extends Musician {
 
 	@Override
@@ -41,7 +48,7 @@ public class BasicFourBeatBassMusician extends Musician {
 			}
 		}
 	}
-	
+
 	private NotePitch extractBassNote(Chord chord) {
 		VoicingAnnotation voicingAnnotation = chord.getAnnotation(VoicingAnnotation.class);
 		if (voicingAnnotation == null) {

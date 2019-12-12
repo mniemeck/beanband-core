@@ -13,8 +13,6 @@ public class MidiPercussionElement extends MidiPitchElement {
 	 * @param key         The {@code PercussionKey} of this event.
 	 * @param start       The start of the event in fractions of a whole bar. Can be
 	 *                    below 0 or above 1 if necessary (use with caution).
-	 * @param duration    The duration of the event in fractions of a whole bar. Can
-	 *                    be above 1 if necessary (use with caution).
 	 * @param onVelocity  The on-velocity to specify for this {@code MidiElement}.
 	 *                    Must be in the range of 0-127.
 	 * @param offVelocity The off-velocity to specify for this {@code MidiElement}.
