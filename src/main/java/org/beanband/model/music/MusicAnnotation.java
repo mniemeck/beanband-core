@@ -41,6 +41,5 @@ public abstract class MusicAnnotation<T extends Annotatable> {
 	@Override
 	public String toString() {
 		return "[" + getClass().getSimpleName() + "] ";
-	};
-
+	}
 }

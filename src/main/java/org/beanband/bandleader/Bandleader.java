@@ -84,9 +84,7 @@ public class Bandleader {
 	private void arrange(Song song) throws InvalidMidiDataException {
 		SortedSet<Arranger> arrangers = new TreeSet<>();
 		ServiceLoader<Arranger> serviceLoader = ServiceLoader.load(Arranger.class);
-		serviceLoader.forEach(a -> {
-			arrangers.add(a);
-		});
+		serviceLoader.forEach(a -> arrangers.add(a));
 		for (Arranger arranger : arrangers) {
 			arranger.annotate(song);
 		}
@@ -98,24 +96,20 @@ public class Bandleader {
 			if (element instanceof Bar) {
 				Bar bar = (Bar) element;
 				if (bar.getAnnotation(WarningAnnotation.class) != null) {
-					bar.getAnnotation(WarningAnnotation.class).getMessages().forEach(m -> {
-						logger.warning("Bar " + lineNumber + ": " + m);
-					});
+					bar.getAnnotation(WarningAnnotation.class).getMessages().forEach(m -> logger.warning("Bar " + lineNumber + ": " + m));
 				}
 				bar.getChords().forEach(c -> {
 					int chordNumber = bar.getChords().indexOf(c) + 1;
 					if (c.getAnnotation(WarningAnnotation.class) != null) {
-						c.getAnnotation(WarningAnnotation.class).getMessages().forEach(m -> {
-							logger.warning("Bar " + lineNumber + ":Chord " + chordNumber + ": " + m);
-						});
+						c.getAnnotation(WarningAnnotation.class).getMessages()
+								.forEach(m -> logger.warning("Bar " + lineNumber + ":Chord " + chordNumber + ": " + m));
 					}
 				});
 			} else if (element instanceof StyleChange) {
 				StyleChange styleChange = (StyleChange) element;
 				if (styleChange.getAnnotation(WarningAnnotation.class) != null) {
-					styleChange.getAnnotation(WarningAnnotation.class).getMessages().forEach(m -> {
-						logger.warning("Style Change " + lineNumber + ": " + m);
-					});
+					styleChange.getAnnotation(WarningAnnotation.class).getMessages()
+							.forEach(m -> logger.warning("Style Change " + lineNumber + ": " + m));
 				}
 			}
 		}

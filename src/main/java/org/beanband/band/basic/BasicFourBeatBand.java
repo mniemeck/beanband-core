@@ -10,9 +10,9 @@ import org.beanband.band.Band;
  *
  */
 public class BasicFourBeatBand extends Band {
-	private final static String STYLE_NAME = "BasicFourBeat";
-	private final static double BEATS_PER_BAR = 4;
-	private final static int[] ALLOWED_CHANGES = { 1, 2 };
+	private static final String STYLE_NAME = "BasicFourBeat";
+	private static final double BEATS_PER_BAR = 4;
+	private static final int[] ALLOWED_CHANGES = { 1, 2 };
 
 	@Override
 	public String getStyleName() {

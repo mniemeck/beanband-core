@@ -28,8 +28,8 @@ import org.beanband.model.song.Thirteenth;
 /**
  * This class performs parsing of lightweight text files containing song
  * information, more specifically chord symbols enriched with some style
- * information - so-called <em>leadsheets</em>. Such a leadsheet file might
- * look something like this
+ * information - so-called <em>leadsheets</em>. Such a leadsheet file might look
+ * something like this
  * 
  * <pre>
  * [BasicFourBeat:80] // Everything following "//" is treated as a comment
@@ -62,8 +62,8 @@ import org.beanband.model.song.Thirteenth;
  */
 public class LightweightFileParser {
 
-	private final static String commentSeparatorPattern = "\\s*//\\s*";
-	private final static Pattern stylePattern = Pattern.compile("\\[(\\w*):(\\d*)\\]");
+	private static final String commentSeparatorPattern = "\\s*//\\s*";
+	private static final Pattern stylePattern = Pattern.compile("\\[(\\w*):(\\d*)\\]");
 
 	private final Map<Pattern, Consumer<Chord>> componentPatternMap;
 
@@ -100,40 +100,25 @@ public class LightweightFileParser {
 
 		Map<Pattern, Consumer<Chord>> map = new HashMap<>();
 
-		map.put(Pattern.compile("^$"), c -> {
-			Logger.getLogger(Bandleader.LOGGER_NAME).fine("Blank line encountered. Empty chord will be added.");
-		});
+		map.put(Pattern.compile("^$"), c -> Logger.getLogger(Bandleader.LOGGER_NAME)
+				.fine("Blank line encountered. Empty chord will be added."));
 
-		notes.forEach((s, n) -> {
-			map.put(Pattern.compile("^" + s + "$"), c -> {
-				setDefaultOptions(c, n);
-			});
-		});
-		map.put(Pattern.compile("^min$"), c -> {
-			c.setThird(Third.MIN);
-		});
-		map.put(Pattern.compile("^sus2$"), c -> {
-			c.setThird(Third.SUS2);
-		});
-		map.put(Pattern.compile("^sus4$"), c -> {
-			c.setThird(Third.SUS4);
-		});
-		map.put(Pattern.compile("^b5$"), c -> {
-			c.setFifth(Fifth.DIM);
-		});
+		notes.forEach((s, n) -> map.put(Pattern.compile("^" + s + "$"), c -> {
+				c.setRoot(n);
+				c.setThird(Third.MAJ);
+				c.setFifth(Fifth.PERFECT);
+			}));
+		map.put(Pattern.compile("^min$"), c -> c.setThird(Third.MIN));
+		map.put(Pattern.compile("^sus2$"), c -> c.setThird(Third.SUS2));
+		map.put(Pattern.compile("^sus4$"), c -> c.setThird(Third.SUS4));
+		map.put(Pattern.compile("^b5$"), c -> c.setFifth(Fifth.DIM));
 		map.put(Pattern.compile("^aug"), c -> {
 			c.setThird(Third.MAJ);
 			c.setFifth(Fifth.AUG);
 		});
-		map.put(Pattern.compile("^6$"), c -> {
-			c.setSeventh(Seventh.SIXTH);
-		});
-		map.put(Pattern.compile("^7$"), c -> {
-			c.setSeventh(Seventh.MIN);
-		});
-		map.put(Pattern.compile("^maj7$"), c -> {
-			c.setSeventh(Seventh.MAJ);
-		});
+		map.put(Pattern.compile("^6$"), c -> c.setSeventh(Seventh.SIXTH));
+		map.put(Pattern.compile("^7$"), c -> c.setSeventh(Seventh.MIN));
+		map.put(Pattern.compile("^maj7$"), c -> c.setSeventh(Seventh.MAJ));
 		map.put(Pattern.compile("^dim$"), c -> {
 			c.setThird(Third.MIN);
 			c.setFifth(Fifth.DIM);
@@ -143,46 +128,17 @@ public class LightweightFileParser {
 			c.setFifth(Fifth.DIM);
 			c.setSeventh(Seventh.SIXTH);
 		});
-		map.put(Pattern.compile("^9$"), c -> {
-			c.setNinth(Ninth.MAJ);
-		});
-		map.put(Pattern.compile("^b9$"), c -> {
-			c.setNinth(Ninth.MIN);
-		});
-		map.put(Pattern.compile("^#9$"), c -> {
-			c.setNinth(Ninth.AUG);
-		});
-		map.put(Pattern.compile("^11$"), c -> {
-			c.setEleventh(Eleventh.PERFECT);
-		});
-		map.put(Pattern.compile("^b11$"), c -> {
-			c.setEleventh(Eleventh.DIM);
-		});
-		map.put(Pattern.compile("^#11$"), c -> {
-			c.setEleventh(Eleventh.AUG);
-		});
-		map.put(Pattern.compile("^13$"), c -> {
-			c.setThirteenth(Thirteenth.MAJ);
-		});
-		map.put(Pattern.compile("^b13$"), c -> {
-			c.setThirteenth(Thirteenth.MIN);
-		});
-		map.put(Pattern.compile("^#13$"), c -> {
-			c.setThirteenth(Thirteenth.AUG);
-			;
-		});
-		notes.forEach((s, n) -> {
-			map.put(Pattern.compile("^/" + s + "$"), c -> {
-				c.setBass(n);
-			});
-		});
+		map.put(Pattern.compile("^9$"), c -> c.setNinth(Ninth.MAJ));
+		map.put(Pattern.compile("^b9$"), c -> c.setNinth(Ninth.MIN));
+		map.put(Pattern.compile("^#9$"), c -> c.setNinth(Ninth.AUG));
+		map.put(Pattern.compile("^11$"), c -> c.setEleventh(Eleventh.PERFECT));
+		map.put(Pattern.compile("^b11$"), c -> c.setEleventh(Eleventh.DIM));
+		map.put(Pattern.compile("^#11$"), c -> c.setEleventh(Eleventh.AUG));
+		map.put(Pattern.compile("^13$"), c -> c.setThirteenth(Thirteenth.MAJ));
+		map.put(Pattern.compile("^b13$"), c -> c.setThirteenth(Thirteenth.MIN));
+		map.put(Pattern.compile("^#13$"), c -> c.setThirteenth(Thirteenth.AUG));
+		notes.forEach((s, n) -> map.put(Pattern.compile("^/" + s + "$"), c -> c.setBass(n)));
 		return map;
-	}
-
-	private static void setDefaultOptions(Chord chord, Note root) {
-		chord.setRoot(root);
-		chord.setThird(Third.MAJ);
-		chord.setFifth(Fifth.PERFECT);
 	}
 
 	/**

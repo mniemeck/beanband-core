@@ -86,7 +86,6 @@ public class Song {
 		String string = "Song (" + bars.size() + " bars, " + elements.size() + " elements total)";
 		for (SongElement element : elements) {
 			string += "\n  " + element.toString().replaceAll("(\\v+)(\\h+)", "$1$2$2");
-			;
 		}
 		return string;
 	}

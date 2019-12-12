@@ -12,7 +12,7 @@ import org.beanband.model.song.Note;
  */
 public class NotePitch extends Pitch {
 
-	private static final Note standardNotes[] = { Note.C, Note.Cs, Note.D, Note.Ds, Note.E, Note.F, Note.Fs, Note.G,
+	private static final Note[] standardNotes = { Note.C, Note.Cs, Note.D, Note.Ds, Note.E, Note.F, Note.Fs, Note.G,
 			Note.Gs, Note.A, Note.As, Note.B };
 
 	private final Note note;
