@@ -25,6 +25,9 @@ public class BassLineArranger extends Arranger {
 
 	@Override
 	public void annotate(Song song) throws InvalidMidiDataException {
+		// TODO Refactor using output of ScaleArranger.
+		// TODO Enhance to include more than the bass note (fifth, fourth, lead tones,
+		// walking lines)
 		NotePitch lowestPitch = new NotePitch(Note.E, 2);
 		NotePitch highestPitch = new NotePitch(Note.B, 3);
 		NotePitch referencePitch = new NotePitch(Note.B, 2);

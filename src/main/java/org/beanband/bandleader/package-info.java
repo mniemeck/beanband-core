@@ -1,9 +1,10 @@
 /**
- * The <em>Bandleader</em> orchestrates the transformation from Song Model to
- * Sequence. It loads and calls all Arrangers to produce the Music Model. Then
- * it loads all Bands and calls all of their Musicians. Finally it collects the
- * resulting MIDI Model and passes it to the Engineer for final assembly of the
- * Sequence.
+ * The {@link org.beanband.bandleader.Bandleader} is the central orchestration
+ * class - <strong>start reading here</strong>. The <em>Bandleader</em>
+ * orchestrates the transformation from Song Model to Sequence. It loads and
+ * calls all Arrangers to produce the Music Model. Then it loads all Bands and
+ * calls all of their Musicians. Finally it collects the resulting MIDI Model
+ * and passes it to the Engineer for final assembly of the Sequence.
  * 
  * @author Michael Niemeck
  */

@@ -22,6 +22,8 @@ public class FormArranger extends Arranger {
 
 	@Override
 	public void annotate(Song song) throws InvalidMidiDataException {
+		// TODO Enhance to actually detect formal features of the leadsheet, like
+		// intros, chorusses, bridges, breaks, etc.
 		for (Bar bar : song.getBars()) {
 			if (bar.getChords().isEmpty() || (bar.getChords().get(0).getRoot() == null)) {
 				bar.getOrCreateAnnotation(FormAnnotation.class).setNoChord();

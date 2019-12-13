@@ -17,7 +17,19 @@ import org.beanband.model.song.StyleChange;
  * for managing its musicians. Note that new instances are created using the
  * {@code ServiceLoader} class, so implementations must stick to the
  * restrictions imposed by the {@code ServiceLoader} and must be registered in
- * the in the {@code META-INF/services/org.beanband.arranger.Arranger} file.
+ * the in the {@code META-INF/services/org.beanband.arranger.Arranger} file. You
+ * should
+ * <dl>
+ * <dt>create a new Band</dt>
+ * <dd>when you want to implement a new style of playing. Since the Band needs
+ * to be selected explicitly by the user, don't create new Bands for slight
+ * variations. Rather, enhance an existing Band to put variations into their
+ * performance automatically.</dd>
+ * <dt>enhance existing Bands</dt>
+ * <dd>to render better performances based on the same Song Model. This is the
+ * core of the <em>BeanBand</em> idea. Whenever in doubt, improving the music
+ * generation algorithms inside a Band is the way to go!</dd>
+ * </dl>
  * 
  * @author Michael Niemeck
  * @see ServiceLoader

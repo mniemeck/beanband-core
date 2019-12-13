@@ -137,5 +137,8 @@ Test song portfolio::
 As mentioned previously, both focus areas are not so much software engineering
 challenges, but need a very high degree of musicological knowledge put into
 them. For further information and the current backlog please refer to the
-link:TODO.adoc[TODO] file.
++TODO+ and +FIXME+ tags scattered through the sourcecode.
+
+Also please keep the code free of any warnings and in general as clean as
+possible.
 

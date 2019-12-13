@@ -10,6 +10,12 @@ import org.beanband.band.Band;
  *
  */
 public class BasicFourBeatBand extends Band {
+	/* TODO Enhance BasicFourBeatBand to form a full showcase/reference implementation
+	 * Create BasicFourBeatPianoMusician
+	 * Clean up and improve existing Musicians
+	 * Support four changes per bar
+	 * Continuously improve existing Arrangers and Musicians
+	 */
 	private static final String STYLE_NAME = "BasicFourBeat";
 	private static final double BEATS_PER_BAR = 4;
 	private static final int[] ALLOWED_CHANGES = { 1, 2 };
