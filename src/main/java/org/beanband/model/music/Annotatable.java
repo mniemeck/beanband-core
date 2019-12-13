@@ -1,5 +1,6 @@
 package org.beanband.model.music;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -45,8 +46,9 @@ public abstract class Annotatable {
 		T musicAnnotation = getAnnotation(annotation);
 		if (musicAnnotation == null) {
 			try {
-				musicAnnotation = annotation.newInstance();
-			} catch (InstantiationException | IllegalAccessException e) {
+				musicAnnotation = annotation.getDeclaredConstructor().newInstance();
+			} catch (InstantiationException | IllegalAccessException | IllegalArgumentException
+					| InvocationTargetException | NoSuchMethodException | SecurityException e) {
 				throw new UnsupportedOperationException(e);
 			}
 			annotationMap.put(annotation, musicAnnotation);
