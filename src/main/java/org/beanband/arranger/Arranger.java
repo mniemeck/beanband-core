@@ -15,7 +15,20 @@ import org.beanband.model.song.Song;
  * model. Note that new instances are created using the {@code ServiceLoader}
  * class, so implementations must stick to the restrictions imposed by the
  * {@code ServiceLoader} and must be registered in the in the
- * {@code META-INF/services/org.beanband.arranger.Arranger} file.
+ * {@code META-INF/services/org.beanband.arranger.Arranger} file. You should
+ * <dl>
+ * <dt>create a new {@code Arranger}</dt>
+ * <dd>when when you have a new type of musicological information to calculate
+ * (you might need an extension of the Music Model as well).</dd>
+ * <dt>enhance an existing Arranger</dt>
+ * <dd>if you have a more clever way of calculating existing musicological
+ * information.</dd>
+ * <dt>create a new Arranger with a lower priority</dt>
+ * <dd>to overwrite existing annotations. That might make sense if you want to
+ * build on the results from multiple higher-priority Arrangers.</dd>
+ * </dl>
+ * As a general rule-of-thumb, put calculations of information that is relevant
+ * to all Bands and is independent of a specific style into Arrangers.
  * 
  * @author Michael Niemeck.
  * @see ServiceLoader

@@ -9,7 +9,10 @@
  * annotations. A special Arranger, the
  * {@link org.beanband.arranger.BandArranger}, will also load, select,
  * instantiate and link the correct Band for every Bar. Arrangers are loaded and
- * called by the {@link org.beanband.bandleader.Bandleader}.
+ * called by the {@link org.beanband.bandleader.Bandleader}. {@code Arranger}
+ * implementations are completely independent of {@code Band} implementations,
+ * they make no assumptions on, or suggestions for, the actual performance of
+ * the music.
  * 
  * @author Michael Niemeck
  */
