@@ -19,9 +19,9 @@ import org.beanband.cli.renderer.MidiFileRenderer;
 import org.beanband.model.song.Song;
 
 /**
- * Application class to generate all test songs in the Portfolio. It reads all
- * filenames from the test directory, then processes the song file through the
- * following chain
+ * Integration test class to generate all test songs in the Portfolio. It reads
+ * all filenames from the test directory, then processes the song file through
+ * the following chain
  * <ul>
  * <li>{@link LightweightFileParser}
  * <li>{@link Bandleader}
@@ -60,9 +60,7 @@ public class BeanBandIntegrationTest {
 	 */
 	public void testSongPortfolio() throws IOException, InvalidMidiDataException {
 		File directory = new File(RESSOURCE_DIRECTORY);
-		for (String filename : directory.list((dir, name) -> {
-			return name.endsWith(".bb");
-		})) {
+		for (String filename : directory.list((dir, name) -> name.endsWith(".bb"))) {
 			String fileroot = directory.getAbsolutePath() + File.separator + filename.split("\\.", 0)[0];
 			createPlayback(new File(fileroot + ".bb"), new File(fileroot + ".midi"), new File(fileroot + ".log"));
 		}
@@ -77,11 +75,9 @@ public class BeanBandIntegrationTest {
 		Sequence sequence = bandleader.perform(song);
 		MidiFileRenderer renderer = new MidiFileRenderer();
 		renderer.render(sequence, outfile);
-		if (logfile != null) {
-			BufferedWriter writer = new BufferedWriter(new FileWriter(logfile, false));
-			writer.write(song.toString());
-			writer.close();
-		}
+		BufferedWriter writer = new BufferedWriter(new FileWriter(logfile, false));
+		writer.write(song.toString());
+		writer.close();
 	}
 
 }
