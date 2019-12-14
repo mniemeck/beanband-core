@@ -8,6 +8,7 @@ import javax.sound.midi.InvalidMidiDataException;
 import org.beanband.band.Musician;
 import org.beanband.model.midi.InstrumentPatch;
 import org.beanband.model.midi.MidiNoteElement;
+import org.beanband.model.midi.MidiProgramChangeElement;
 import org.beanband.model.midi.NotePitch;
 import org.beanband.model.music.VoicingAnnotation;
 import org.beanband.model.music.VoicingAnnotation.Type;
@@ -22,13 +23,10 @@ import org.beanband.model.song.Chord;
  *
  */
 public class BasicFourBeatGuitarMusician extends Musician {
-	@Override
-	public InstrumentPatch getInstrumentPatch() {
-		return InstrumentPatch.ACOUSTIC_GUITAR_STEEL;
-	}
 
 	@Override
 	protected void createElements(Bar bar) throws InvalidMidiDataException {
+		addElement(new MidiProgramChangeElement(InstrumentPatch.ACOUSTIC_GUITAR_STEEL, 0.0));
 		switch (bar.getChords().size()) {
 		case 1:
 			addFullBar(bar.getChords().get(0), 0.0);

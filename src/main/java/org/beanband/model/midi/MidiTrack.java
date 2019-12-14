@@ -16,18 +16,6 @@ public class MidiTrack {
 
 	private final List<MidiElement> elements = new ArrayList<>();
 
-	private final InstrumentPatch instrumentPatch;
-
-	/**
-	 * Constructs a new {@code MidiTrack} object.
-	 * 
-	 * @param instrumentPatch The {@code InstrumentPatch} that will be set for this
-	 *                        {@code MidiTrack}.
-	 */
-	public MidiTrack(InstrumentPatch instrumentPatch) {
-		this.instrumentPatch = instrumentPatch;
-	}
-
 	/**
 	 * Adds a new {@code MidiElement} to this {@code MidiTrack}.
 	 * 
@@ -58,11 +46,4 @@ public class MidiTrack {
 		return Collections.unmodifiableList(elements);
 	}
 
-	/**
-	 * Returns the {@code InstrumentPatch} that has been set for {@code MidiTrack}.
-	 * @return The {@code InstrumentPatch} of this track.
-	 */
-	public InstrumentPatch getInstrumentPatch() {
-		return instrumentPatch;
-	}
 }

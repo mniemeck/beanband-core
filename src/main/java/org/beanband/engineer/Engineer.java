@@ -12,7 +12,6 @@ import javax.sound.midi.Sequence;
 import javax.sound.midi.ShortMessage;
 import javax.sound.midi.Track;
 
-import org.beanband.model.midi.InstrumentPatch;
 import org.beanband.model.midi.MidiBar;
 import org.beanband.model.midi.MidiElement;
 import org.beanband.model.midi.MidiSong;
@@ -50,7 +49,7 @@ public class Engineer {
 
 		long tickOffset = 0;
 		long currentMsPerBeat = 0;
-		InstrumentPatch[] patchList = new InstrumentPatch[15];
+		Integer[] patchList = new Integer[15];
 		Track[] trackList = new Track[15];
 
 		for (MidiBar midiBar : midiSong.getBars()) {
@@ -70,14 +69,24 @@ public class Engineer {
 				if (trackList[currentChannel] == null) {
 					trackList[currentChannel] = sequence.createTrack();
 				}
-				InstrumentPatch instrumentPatch = midiTrack.getInstrumentPatch();
-				if ((patchList[currentChannel] == null) || (patchList[currentChannel] != instrumentPatch)) {
-					trackList[currentChannel].add(createProgramChange(instrumentPatch, currentChannel, tickOffset));
-					patchList[currentChannel] = instrumentPatch;
-				}
 				for (MidiEvent midiEvent : alignMidiEvents(midiTrack.getElements(), currentChannel, ticksPerBar,
 						tickOffset)) {
-					trackList[currentChannel].add(midiEvent);
+					boolean isEventToAdd = false;
+					if (!(midiEvent.getMessage() instanceof ShortMessage)) {
+						isEventToAdd = true;
+					} else if (((ShortMessage) midiEvent.getMessage()).getCommand() != ShortMessage.PROGRAM_CHANGE) {
+						isEventToAdd = true;
+					} else {
+						int instrumentPatch = ((ShortMessage) midiEvent.getMessage()).getData1();
+						if ((patchList[currentChannel] == null) || (patchList[currentChannel] != instrumentPatch)) {
+							patchList[currentChannel] = instrumentPatch;
+							isEventToAdd = true;
+						}
+					}
+
+					if (isEventToAdd) {
+						trackList[currentChannel].add(midiEvent);
+					}
 				}
 				currentTrack++;
 			}
@@ -102,13 +111,6 @@ public class Engineer {
 		return new MidiEvent(midiMessage, tick);
 	}
 
-	private MidiEvent createProgramChange(InstrumentPatch instrumentPatch, int channel, long tick)
-			throws InvalidMidiDataException {
-		MidiMessage midiMessage = new ShortMessage(ShortMessage.PROGRAM_CHANGE, channel, instrumentPatch.getNumber(),
-				0);
-		return new MidiEvent(midiMessage, tick);
-	}
-	
 	private MidiEvent createLyricEvent(String text, long tick) throws InvalidMidiDataException {
 		byte lyricType = 0x05;
 		byte[] lyrics = text.getBytes(StandardCharsets.UTF_8);

@@ -37,7 +37,7 @@ import org.beanband.model.song.StyleChange;
 public abstract class Band {
 
 	private List<Musician> musicians;
-	private LeadMusician leadMusician;
+	private PercussionMusician leadMusician;
 
 	/**
 	 * Returns the style name that this {@code Band} implements. This style name
@@ -108,15 +108,15 @@ public abstract class Band {
 	}
 
 	/**
-	 * One {@code Musician} of the {@code Band} can be designated as the
-	 * {@code LeadMusician}. This musician has the additional capability of
-	 * performing a <em>count-in</em> before the first bar. A typical example is a
-	 * drummer counting one bar of quarter beats by banging the drumsticks together.
+	 * One {@code PercussionMusician} of the {@code Band} can be designated as the
+	 * {@code LeadMusician}. This musician has the additional task of performing a
+	 * <em>count-in</em> before the first bar. A typical example is a drummer
+	 * counting one bar of quarter beats by banging the drumsticks together.
 	 * 
-	 * @return The {@code LeadMusician} of the {@code Band}, or {@code null} if the
-	 *         {@code Band} doesn't have one.
+	 * @return The {@code PercussionMusician} of the {@code Band} doing the
+	 *         count-in, or {@code null} if the {@code Band} doesn't have one.
 	 */
-	public final LeadMusician getLeadMusician() {
+	public final PercussionMusician getLeadMusician() {
 		if (musicians == null) {
 			loadMusicians();
 		}
@@ -129,17 +129,12 @@ public abstract class Band {
 		musicians.add(musician);
 	}
 
-	protected final void setLeadMusician(LeadMusician musician) {
+	protected final void setLeadMusician(PercussionMusician musician) {
 		this.leadMusician = musician;
 	}
 
-	protected final void addLeadMusician(Musician musician) {
+	protected final void addLeadMusician(PercussionMusician musician) {
 		addMusician(musician);
-		if (musician instanceof LeadMusician) {
-			setLeadMusician((LeadMusician) musician);
-		} else {
-			Logger.getLogger(Bandleader.LOGGER_NAME)
-					.warning(musician.getClass().getName() + " is not a LeadMusician. Not set.");
-		}
+		setLeadMusician(musician);
 	}
 }
