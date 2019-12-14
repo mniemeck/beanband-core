@@ -43,9 +43,8 @@ public class MidiBar {
 	 *                        with the new {@code MidiTrack}.
 	 * @return The newly created {@code MidiTrack}.
 	 */
-	public MidiTrack addTrack(InstrumentPatch instrumentPatch) {
-
-		MidiTrack newTrack = new MidiTrack(instrumentPatch);
+	public MidiTrack addTrack() {
+		MidiTrack newTrack = new MidiTrack();
 
 		tracks.add(newTrack);
 
@@ -70,7 +69,7 @@ public class MidiBar {
 	 * @return The newly created {@code MidiTrack}.
 	 */
 	public MidiTrack addPercussionTrack() {
-		MidiTrack newTrack = new MidiTrack(null);
+		MidiTrack newTrack = new MidiTrack();
 
 		percussionTracks.add(newTrack);
 

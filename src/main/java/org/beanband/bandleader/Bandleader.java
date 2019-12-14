@@ -10,7 +10,6 @@ import javax.sound.midi.Sequence;
 
 import org.beanband.arranger.Arranger;
 import org.beanband.band.Band;
-import org.beanband.band.LeadMusician;
 import org.beanband.band.Musician;
 import org.beanband.band.PercussionMusician;
 import org.beanband.engineer.Engineer;
@@ -96,7 +95,8 @@ public class Bandleader {
 			if (element instanceof Bar) {
 				Bar bar = (Bar) element;
 				if (bar.getAnnotation(WarningAnnotation.class) != null) {
-					bar.getAnnotation(WarningAnnotation.class).getMessages().forEach(m -> logger.warning("Bar " + lineNumber + ": " + m));
+					bar.getAnnotation(WarningAnnotation.class).getMessages()
+							.forEach(m -> logger.warning("Bar " + lineNumber + ": " + m));
 				}
 				bar.getChords().forEach(c -> {
 					int chordNumber = bar.getChords().indexOf(c) + 1;
@@ -120,7 +120,7 @@ public class Bandleader {
 		if (!song.getBars().isEmpty()) {
 			Bar firstBar = song.getBars().get(0);
 			Band band = firstBar.getAnnotation(BandAnnotation.class).getBand();
-			LeadMusician leadMusician = band.getLeadMusician();
+			PercussionMusician leadMusician = band.getLeadMusician();
 			if (leadMusician != null) {
 				Integer tempo = firstBar.getAnnotation(BandAnnotation.class).getTempo();
 				MidiBar midiBar = midiSong.addBar(leadMusician.getCountInBeats(), tempo, null);
@@ -137,7 +137,7 @@ public class Bandleader {
 				if (musician instanceof PercussionMusician) {
 					midiTrack = midiBar.addPercussionTrack();
 				} else {
-					midiTrack = midiBar.addTrack(musician.getInstrumentPatch());
+					midiTrack = midiBar.addTrack();
 				}
 				midiTrack.addElements(musician.play(bar));
 			}

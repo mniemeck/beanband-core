@@ -6,7 +6,6 @@ import java.util.Collections;
 
 import javax.sound.midi.InvalidMidiDataException;
 
-import org.beanband.model.midi.InstrumentPatch;
 import org.beanband.model.midi.MidiElement;
 import org.beanband.model.song.Bar;
 
@@ -23,13 +22,6 @@ import org.beanband.model.song.Bar;
 public abstract class Musician {
 
 	private final Collection<MidiElement> elements = new ArrayList<>();
-
-	/**
-	 * Returns the {@code InstrumentPatch} this {@code Musician} requires.
-	 * 
-	 * @return The {@code InstrumentPatch} this {@code Musician} requires.
-	 */
-	public abstract InstrumentPatch getInstrumentPatch();
 
 	/**
 	 * Returns the music rendered for one {@code Bar} of the Song Model.

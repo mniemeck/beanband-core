@@ -6,7 +6,6 @@ import java.util.Collections;
 
 import javax.sound.midi.InvalidMidiDataException;
 
-import org.beanband.band.LeadMusician;
 import org.beanband.band.PercussionMusician;
 import org.beanband.model.midi.MidiElement;
 import org.beanband.model.midi.MidiPercussionElement;
@@ -23,7 +22,7 @@ import org.beanband.model.song.Bar;
  * @author Michael Niemeck
  *
  */
-public class BasicFourBeatDrumsMusician extends PercussionMusician implements LeadMusician {
+public class BasicFourBeatDrumsMusician extends PercussionMusician {
 	private static final double COUNT_IN_BEATS = 8;
 
 	@Override
