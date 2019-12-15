@@ -3,29 +3,40 @@ package org.beanband.arranger.basic;
 import javax.sound.midi.InvalidMidiDataException;
 
 import org.beanband.arranger.Arranger;
+import org.beanband.model.music.ScaleAnnotation;
+import org.beanband.model.song.Bar;
+import org.beanband.model.song.Chord;
+import org.beanband.model.song.Note;
 import org.beanband.model.song.Song;
 
 /**
- * TODO Implement ScaleArranger
+ * Calculates Scale Notes and other functions based on a given {@code Chord}.
  * 
  * @author Michael Niemeck
+ * @see ScaleAnnotation
  */
 public class ScaleArranger extends Arranger {
 
 	@Override
 	public void annotate(Song song) throws InvalidMidiDataException {
-		/*
-		  *** +ScaleAnnotation+ contains Notes, not NotePitches (cf. +VoicingAnnotation+)
-		  *** Bass note (for BasslineArranger)
-		  *** Chord function notes ordered by priority (for VoicingArrangers)
-		  *** Scale notes starting from root note
-		  *** Lead notes based on next bar
-		  *** Possible algorithm:
-		   **** Pre-define well-known scales
-		   **** case or if/else search tree based on chord functions
-		   **** This will ignore chord functions that have no impact on the scale, but rather act as tensions
-		   **** Unfortunately it will also pick the wrong scale if not all chord functions are declared
-		  */
+		for (Bar bar : song.getBars()) {
+			for (Chord chord : bar.getChords()) {
+				Note bassNote = (chord.getBass() != null ? chord.getBass() : chord.getRoot());
+				if (bassNote != null) {
+					chord.getOrCreateAnnotation(ScaleAnnotation.class).setBassNote(bassNote);
+				}
+			}
+		}
+		// TODO Add chord function notes ordered by priority (for VoicingArrangers)
+
+		// TODO Add scale notes starting from root note, based either on pre-defined
+		// scales or constructed by functions.
+
+		// TODO Function (e.g. lead) notes based on context
 	}
 
+	@Override
+	protected int getPriority() {
+		return Integer.MAX_VALUE - 1;
+	}
 }

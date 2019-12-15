@@ -4,6 +4,7 @@ import javax.sound.midi.InvalidMidiDataException;
 
 import org.beanband.arranger.Arranger;
 import org.beanband.model.midi.NotePitch;
+import org.beanband.model.music.ScaleAnnotation;
 import org.beanband.model.music.VoicingAnnotation;
 import org.beanband.model.music.VoicingAnnotation.Type;
 import org.beanband.model.song.Bar;
@@ -25,7 +26,6 @@ public class BassLineArranger extends Arranger {
 
 	@Override
 	public void annotate(Song song) throws InvalidMidiDataException {
-		// TODO Refactor using output of ScaleArranger.
 		// TODO Enhance to include more than the bass note (fifth, fourth, lead tones,
 		// walking lines)
 		NotePitch lowestPitch = new NotePitch(Note.E, 2);
@@ -34,7 +34,7 @@ public class BassLineArranger extends Arranger {
 
 		for (Bar bar : song.getBars()) {
 			for (Chord chord : bar.getChords()) {
-				Note note = (chord.getBass() != null ? chord.getBass() : chord.getRoot());
+				Note note = getBassNote(chord);
 				if (note != null) {
 					NotePitch notePitch = movePitchInRange(getNearestPitch(note, referencePitch), lowestPitch,
 							highestPitch);
@@ -43,6 +43,14 @@ public class BassLineArranger extends Arranger {
 				}
 			}
 		}
+	}
+	
+	private Note getBassNote(Chord chord) {
+		ScaleAnnotation scaleAnnotation = chord.getAnnotation(ScaleAnnotation.class);
+		if (scaleAnnotation ==null) {
+			return null;
+		}
+		return scaleAnnotation.getBassNote();
 	}
 
 	private NotePitch getNearestPitch(Note note, NotePitch referencePitch) throws InvalidMidiDataException {
@@ -66,6 +74,11 @@ public class BassLineArranger extends Arranger {
 			newPitch = new NotePitch(newPitch.getNote(), newPitch.getOctave() - 1);
 		}
 		return newPitch;
+	}
+
+	@Override
+	protected int getPriority() {
+		return Integer.MAX_VALUE - 2;
 	}
 
 }

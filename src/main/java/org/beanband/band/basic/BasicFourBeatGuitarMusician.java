@@ -2,6 +2,7 @@ package org.beanband.band.basic;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Random;
 
 import javax.sound.midi.InvalidMidiDataException;
 
@@ -17,12 +18,14 @@ import org.beanband.model.song.Chord;
 
 /**
  * The guitar player of our showcase band. It will play just the basic voicing
- * in a slightly varying rhythm based on the number of changes per bar.
+ * in a slightly varying rhythm based on the number of changes per bar, and add
+ * some randomized fret noises.
  * 
  * @author Michael Niemeck
  *
  */
 public class BasicFourBeatGuitarMusician extends Musician {
+	private Random random = new Random();
 
 	@Override
 	protected void createElements(Bar bar) throws InvalidMidiDataException {
@@ -37,12 +40,15 @@ public class BasicFourBeatGuitarMusician extends Musician {
 			break;
 		}
 	}
-		
+
 	private void addFullBar(Chord chord, double start) throws InvalidMidiDataException {
 		List<NotePitch> voicing = extractGuitarVoicing(chord);
 		for (NotePitch notePitch : voicing) {
 			addElement(new MidiNoteElement(notePitch, start + 0.0, 0.5 * 0.75, 80, 127));
 			addElement(new MidiNoteElement(notePitch, start + 0.5, 0.5 * 0.75, 65, 127));
+		}
+		if (random.nextInt(25) == 0) {
+			addFretNoise(start + 0.9375, 0.02);
 		}
 	}
 
@@ -52,8 +58,17 @@ public class BasicFourBeatGuitarMusician extends Musician {
 			addElement(new MidiNoteElement(notePitch, start + 0.0, 0.25 * 0.75, 82, 127));
 			addElement(new MidiNoteElement(notePitch, start + 0.25, 0.25 * 0.75, 50, 127));
 		}
+		addFretNoise(start + 0.375, 0.02);
 	}
 
+	private void addFretNoise(double start, double variation) throws InvalidMidiDataException {
+		double actualStart = start + random.nextGaussian() * variation;
+		double duration = 0.1 + random.nextGaussian() * 0.001;
+		NotePitch notePitch = new NotePitch(random.nextInt(128));
+		addElement(new MidiProgramChangeElement(InstrumentPatch.GUITAR_FRET_NOISE, actualStart - 0.01));
+		addElement(new MidiNoteElement(notePitch, actualStart, duration, 64, 0));
+		addElement(new MidiProgramChangeElement(InstrumentPatch.ACOUSTIC_GUITAR_STEEL, actualStart + 0.01));
+	}
 
 	private List<NotePitch> extractGuitarVoicing(Chord chord) {
 		VoicingAnnotation voicingAnnotation = chord.getAnnotation(VoicingAnnotation.class);

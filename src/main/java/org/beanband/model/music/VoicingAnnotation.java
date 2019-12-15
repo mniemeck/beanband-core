@@ -10,7 +10,7 @@ import org.beanband.model.midi.NotePitch;
 import org.beanband.model.song.Chord;
 
 /**
- * {@code MusicAnnotation} attachable to {@code Chord} objects that contains
+ * A {@code MusicAnnotation} attachable to {@code Chord} objects that contains
  * <em>voicings</em> calculated for each chord. A <em>voicing</em> is a set of
  * notes that should be played to sound the chord denoted by the chord symbol.
  * Voicings contains absolute pitches, so they are not only instrument-specific
@@ -24,6 +24,8 @@ import org.beanband.model.song.Chord;
  * example a <em>closed</em> voicing and an <em>open voicing</em>, but be
  * careful not to differentiate too much according to style. <em>Different
  * styles are the domain of the {@code Band}, not of the {@code Arranger}</em>.
+ * 
+ * @author Michael Niemeck
  */
 public class VoicingAnnotation extends MusicAnnotation<Chord> {
 

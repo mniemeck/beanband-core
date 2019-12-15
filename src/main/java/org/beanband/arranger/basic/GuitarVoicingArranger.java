@@ -193,4 +193,9 @@ public class GuitarVoicingArranger extends Arranger {
 			voicingAnnotation.addNotePitch(Type.GUITAR_BASIC, new NotePitch(currentStringPitch + 3));
 		}
 	}
+	
+	@Override
+	protected int getPriority() {
+		return Integer.MAX_VALUE - 2;
+	}
 }
