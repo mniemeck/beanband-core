@@ -99,10 +99,10 @@ public class MidiBar {
 	}
 
 	/**
-	 * Calculates the length of one beat in milliseconds based on the beats per
+	 * Calculates the length of one beat in microseconds based on the beats per
 	 * minute specified for this {@code MidiBar}.
 	 * 
-	 * @return The length of one beat in milliseconds.
+	 * @return The length of one beat in microseconds.
 	 */
 	public long getMsPerBeat() {
 		return Math.round(60000000 / beatsPerMinute);
