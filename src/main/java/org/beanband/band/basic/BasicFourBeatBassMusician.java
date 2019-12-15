@@ -35,6 +35,11 @@ public class BasicFourBeatBassMusician extends Musician {
 			addStrongHalfBar(bar.getChords().get(0), 0.0);
 			addStrongHalfBar(bar.getChords().get(1), 0.5);
 			break;
+		case 4:
+			addQuarterBar(bar.getChords().get(0), 0.0);
+			addQuarterBar(bar.getChords().get(1), 0.25);
+			addQuarterBar(bar.getChords().get(2), 0.5);
+			addQuarterBar(bar.getChords().get(3), 0.75);
 		}
 	}
 
@@ -50,6 +55,13 @@ public class BasicFourBeatBassMusician extends Musician {
 		NotePitch bassNote = extractBassNote(chord);
 		if (bassNote != null) {
 			addElement(new MidiNoteElement(bassNote, start + 0.0, 0.375 * 0.75, 122, 127));
+		}
+	}
+	
+	private void addQuarterBar(Chord chord, double start) throws InvalidMidiDataException {
+		NotePitch bassNote = extractBassNote(chord);
+		if (bassNote != null) {
+			addElement(new MidiNoteElement(bassNote, start + 0.0, 0.25 * 0.75, 125, 127));
 		}
 	}
 

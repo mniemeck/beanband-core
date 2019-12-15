@@ -52,6 +52,15 @@ public class BasicFourBeatDrumsMusician extends PercussionMusician {
 				addSnareStrongHalfBar(0.5);
 				addHiHatStrongHalfBar(0.5);
 				break;
+			case 4:
+				addKickStrongHalfBar(0.0);
+				addSnareStrongHalfBar(0.0);
+				addHiHatStrongHalfBar(0.0);
+				
+				addKickStrongHalfBar(0.5);
+				addSnareStrongHalfBar(0.5);
+				addHiHatStrongHalfBar(0.5);
+				break;
 			}
 		}
 		if ((annotation != null) && annotation.isLastBar()) {

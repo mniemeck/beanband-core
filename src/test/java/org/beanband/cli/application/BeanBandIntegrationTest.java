@@ -43,6 +43,7 @@ public class BeanBandIntegrationTest {
 	public BeanBandIntegrationTest() {
 		logger = Logger.getLogger(Bandleader.LOGGER_NAME);
 		logger.setLevel(Level.ALL);
+		logger.setUseParentHandlers(false);
 		Handler handler = new ConsoleHandler();
 		handler.setLevel(Level.ALL);
 		handler.setFormatter(new SimpleFormatter());
