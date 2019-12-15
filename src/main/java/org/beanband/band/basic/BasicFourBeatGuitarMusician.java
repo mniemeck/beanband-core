@@ -29,6 +29,7 @@ public class BasicFourBeatGuitarMusician extends Musician {
 
 	@Override
 	protected void createElements(Bar bar) throws InvalidMidiDataException {
+		// TODO Change fret noise probability based on average chords per bar
 		addElement(new MidiProgramChangeElement(InstrumentPatch.ACOUSTIC_GUITAR_STEEL, 0.0));
 		switch (bar.getChords().size()) {
 		case 1:
@@ -37,6 +38,12 @@ public class BasicFourBeatGuitarMusician extends Musician {
 		case 2:
 			addHalfBar(bar.getChords().get(0), 0.0);
 			addHalfBar(bar.getChords().get(1), 0.5);
+			break;
+		case 4:
+			addQuarterBar(bar.getChords().get(0), 0.0);
+			addQuarterBar(bar.getChords().get(1), 0.25);
+			addQuarterBar(bar.getChords().get(2), 0.5);
+			addQuarterBar(bar.getChords().get(3), 0.75);
 			break;
 		}
 	}
@@ -59,6 +66,14 @@ public class BasicFourBeatGuitarMusician extends Musician {
 			addElement(new MidiNoteElement(notePitch, start + 0.25, 0.25 * 0.75, 50, 127));
 		}
 		addFretNoise(start + 0.375, 0.02);
+	}
+	
+	private void addQuarterBar(Chord chord, double start) throws InvalidMidiDataException {
+		List<NotePitch> voicing = extractGuitarVoicing(chord);
+		for (NotePitch notePitch : voicing) {
+			addElement(new MidiNoteElement(notePitch, start + 0.0, 0.25 * 0.75, 87, 127));
+		}
+		addFretNoise(start + 0.21875, 0.01);
 	}
 
 	private void addFretNoise(double start, double variation) throws InvalidMidiDataException {
