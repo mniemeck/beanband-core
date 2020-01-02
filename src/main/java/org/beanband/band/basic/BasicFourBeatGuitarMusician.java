@@ -27,7 +27,7 @@ import org.beanband.model.song.Chord;
  */
 public class BasicFourBeatGuitarMusician extends Musician {
 	
-	// TODO FretNoise logic more general
+	// TODO FretNoise logic more generic
 	
 	// - Only when changeAfter (cf. FormArranger)
 	// - Probability based on time to change (Already done? - Better document variables)
@@ -99,7 +99,6 @@ public class BasicFourBeatGuitarMusician extends Musician {
 	
 	private void addFretNoise(double start, double duration, long msPerBar) throws InvalidMidiDataException {
 		if (random.nextGaussian() * FRET_PROBABILIY_DEV + FRET_PROBABILITY_MEAN <= (duration * msPerBar)) {
-			System.out.println("No fret");
 			return;
 		}
 		double startMean = start + duration / 2;
@@ -109,7 +108,6 @@ public class BasicFourBeatGuitarMusician extends Musician {
 		double actualDuration = random.nextGaussian() * FRET_DURATION_DEV + FRET_DURATION_MEAN;
 		NotePitch actualPitch = new NotePitch(FRET_PITCH_MIN + random.nextInt(FRET_PITCH_MAX - FRET_PITCH_MIN));
 		
-		System.out.println(start + " " + duration + " " + actualStart + " " + actualDuration + " " + actualPitch);
 		addElement(new MidiProgramChangeElement(InstrumentPatch.GUITAR_FRET_NOISE, actualStart - 0.01));
 		addElement(new MidiNoteElement(actualPitch, actualStart, actualDuration, 64, 0));
 		addElement(new MidiProgramChangeElement(InstrumentPatch.ACOUSTIC_GUITAR_STEEL, actualStart + 0.01));

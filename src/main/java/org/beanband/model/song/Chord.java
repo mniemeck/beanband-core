@@ -301,7 +301,25 @@ public class Chord extends Annotatable {
 
 		return string;
 	}
-	
+
+	@Override
+	public boolean equals(Object obj) {
+		if ((obj == null) || !(obj instanceof Chord)) {
+			return false;
+		}
+		Chord chord = (Chord) obj;
+		return equals(root, chord.root) && equals(third, chord.third) && equals(fifth, chord.fifth)
+				&& equals(seventh, chord.seventh) && equals(ninth, chord.ninth) && equals(eleventh, chord.eleventh)
+				&& equals(thirteenth, chord.thirteenth) && equals(bass, chord.bass);
+	}
+
+	private boolean equals(Enum<?> a, Enum<?> b) {
+		if (a == null) {
+			return b == null;
+		}
+		return a.equals(b);
+	}
+
 	/**
 	 * Returns a textual representation of this {@code Chord} in common chord
 	 * notation. In addition, all {@link MusicAnnotation} objects linked to the

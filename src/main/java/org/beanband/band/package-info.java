@@ -12,3 +12,5 @@
  * @author Michael Niemeck
  */
 package org.beanband.band;
+
+//TODO Clean up and continuously improve existing Musicians

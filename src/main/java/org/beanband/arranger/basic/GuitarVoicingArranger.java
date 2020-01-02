@@ -193,8 +193,4 @@ public class GuitarVoicingArranger extends Arranger {
 		}
 	}
 	
-	@Override
-	protected int getPriority() {
-		return Integer.MAX_VALUE - 2;
-	}
 }

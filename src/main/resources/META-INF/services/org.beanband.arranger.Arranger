@@ -1,4 +1,5 @@
 org.beanband.arranger.BandArranger
+org.beanband.arranger.basic.ProgressionArranger
 org.beanband.arranger.basic.FormArranger
 org.beanband.arranger.basic.ScaleArranger
 org.beanband.arranger.basic.BassLineArranger

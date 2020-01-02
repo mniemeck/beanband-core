@@ -1,18 +1,22 @@
 package org.beanband.arranger.basic;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.sound.midi.InvalidMidiDataException;
 
 import org.beanband.arranger.Arranger;
 import org.beanband.model.music.FormAnnotation;
+import org.beanband.model.music.ProgressionAnnotation;
 import org.beanband.model.song.Bar;
+import org.beanband.model.song.Chord;
 import org.beanband.model.song.Song;
 
 /**
- * The {@code Form Arranger} should analyze the song (e.g. by counting bars,
+ * The {@code FormArranger} should analyze the song (e.g. by counting bars,
  * analyzing the chord changes, finding repetitions, maybe even doing a
  * functional analysis of the harmonies) and annotate formal features on a
- * bar-level. Currently, only the last bar of the song is annotated, and bars
- * with no chords are marked.
+ * bar-level.
  * 
  * @author Michael Niemeck
  * @see FormAnnotation
@@ -25,14 +29,76 @@ public class FormArranger extends Arranger {
 		// TODO Enhance to actually detect formal features of the leadsheet (intros,
 		// chorusses, bridges, breaks, etc.)
 
-		// TODO Calculate numChanges and avgChanges @Bar
-		// TODO Calculate changeAfter @Chord
+		annotateChordChanges(song);
+		annotateLastBar(song);
+	}
+
+	private void annotateChordChanges(Song song) {
+		int numBars = 0;
+		int numChanges = 0;
 		for (Bar bar : song.getBars()) {
-			if (bar.getChords().isEmpty() || (bar.getChords().get(0).getRoot() == null)) {
-				bar.getOrCreateAnnotation(FormAnnotation.class).setNoChord();
+			if (isNoChord(bar)) {
+				bar.getOrCreateAnnotation(FormAnnotation.class).setNoChord(true);
+			} else {
+				numBars++;
+				for (Chord chord : bar.getChords()) {
+					if (isChangeAfter(chord)) {
+						numChanges++;
+					}
+				}
 			}
 		}
-		song.getBars().get(song.getBars().size() - 1).getOrCreateAnnotation(FormAnnotation.class).setIsLastBar();
+		numChanges++;
+		double averageChanges = Math.rint((double) numChanges / (double) numBars);
+		List<Bar> barsToAnnotate = new ArrayList<>();
+		for (Bar bar : song.getBars()) {
+			if ((bar.getChords().size() != 1) || isChangeBefore(bar.getChords().get(0))) {
+				for (Bar barToAnnotate : barsToAnnotate) {
+					barToAnnotate.getOrCreateAnnotation(FormAnnotation.class)
+					.setChangeRatio(barToAnnotate.getChords().size() / (averageChanges * barsToAnnotate.size()));
+				}
+				barsToAnnotate.clear();
+			}
+			barsToAnnotate.add(bar);
+		}
+		for (Bar barToAnnotate : barsToAnnotate) {
+			barToAnnotate.getOrCreateAnnotation(FormAnnotation.class)
+			.setChangeRatio(barToAnnotate.getChords().size() / (averageChanges * barsToAnnotate.size()));
+		}
+	}
+
+	private boolean isNoChord(Bar bar) {
+		for (Chord chord : bar.getChords()) {
+			if (chord.getRoot() != null) {
+				return false;
+			}
+		}
+		return true;
+	}
+	
+	private boolean isChangeAfter(Chord chord) {
+		ProgressionAnnotation progressionAnnotation = chord.getAnnotation(ProgressionAnnotation.class);
+		if (progressionAnnotation == null) {
+			return false;
+		}
+		return progressionAnnotation.isChangeAfter();
+	}
+
+	private boolean isChangeBefore(Chord chord) {
+		ProgressionAnnotation progressionAnnotation = chord.getAnnotation(ProgressionAnnotation.class);
+		if (progressionAnnotation == null) {
+			return false;
+		}
+		return progressionAnnotation.isChangeBefore();
+	}
+
+	private void annotateLastBar(Song song) {
+		song.getBars().get(song.getBars().size() - 1).getOrCreateAnnotation(FormAnnotation.class).setLastBar(true);
+	}
+
+	@Override
+	protected int getPriority() {
+		return Integer.MAX_VALUE - 20;
 	}
 
 }

@@ -38,6 +38,6 @@ public class ScaleArranger extends Arranger {
 
 	@Override
 	protected int getPriority() {
-		return Integer.MAX_VALUE - 1;
+		return Integer.MAX_VALUE - 20;
 	}
 }
