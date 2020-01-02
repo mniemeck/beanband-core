@@ -44,10 +44,10 @@ public class BassLineArranger extends Arranger {
 			}
 		}
 	}
-	
+
 	private Note getBassNote(Chord chord) {
 		ScaleAnnotation scaleAnnotation = chord.getAnnotation(ScaleAnnotation.class);
-		if (scaleAnnotation ==null) {
+		if (scaleAnnotation == null) {
 			return null;
 		}
 		return scaleAnnotation.getBassNote();

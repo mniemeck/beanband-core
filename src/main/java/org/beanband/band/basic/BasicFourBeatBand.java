@@ -14,6 +14,9 @@ public class BasicFourBeatBand extends Band {
 
 	// TODO Clean up and continuously improve existing Arrangers and Musicians
 
+	// TODO Create BasicThreeBeat Band, start extracting functionality into
+	// superclasses.
+
 	private static final String STYLE_NAME = "BasicFourBeat";
 	private static final double BEATS_PER_BAR = 4;
 	private static final int[] ALLOWED_CHANGES = { 1, 2, 4 };

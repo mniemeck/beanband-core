@@ -6,7 +6,7 @@ import org.beanband.arranger.Arranger;
 import org.beanband.model.song.Song;
 
 /**
- * TODO Implement
+ * TODO Implement PianoVoicingArranger
  * 
  * @author Michael Niemeck
  */

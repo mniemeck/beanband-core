@@ -25,6 +25,8 @@ import org.beanband.model.song.Bar;
 public class BasicFourBeatDrumsMusician extends PercussionMusician {
 	private static final double COUNT_IN_BEATS = 8;
 
+	// TODO Add generic randomization feature.
+	
 	@Override
 	protected void createElements(Bar bar) throws InvalidMidiDataException {
 		FormAnnotation annotation = bar.getAnnotation(FormAnnotation.class);

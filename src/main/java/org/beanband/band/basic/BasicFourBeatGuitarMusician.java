@@ -27,6 +27,11 @@ import org.beanband.model.song.Chord;
  */
 public class BasicFourBeatGuitarMusician extends Musician {
 	
+	// TODO FretNoise logic more general
+	
+	// - Only when changeAfter (cf. FormArranger)
+	// - Probability based on time to change (Already done? - Better document variables)
+	
 	private static final double FRET_PROBABILITY_MEAN = 125.0;
 	private static final double FRET_PROBABILIY_DEV = 175.0;
 	private static final double FRET_DURATION_MEAN = 0.1;

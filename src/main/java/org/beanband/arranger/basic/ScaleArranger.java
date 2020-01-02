@@ -27,12 +27,13 @@ public class ScaleArranger extends Arranger {
 				}
 			}
 		}
-		// TODO Add chord function notes ordered by priority (for VoicingArrangers)
+		// TODO Add chord function notes ordered by priority (for VoicingArrangers) (3,
+		// 7, 9, 11, 13, 5 (except dim), 1). Maybe move to ChordArranger.
 
-		// TODO Add scale notes starting from root note, based either on pre-defined
-		// scales or constructed by functions.
+		// TODO Add scale notes starting from root note, constructed by functions.
+		// Default tones based on 3 and 5, altered by chord functions
 
-		// TODO Function (e.g. lead) notes based on context
+		// TODO Enhance to include various function (e.g. lead) notes based on context
 	}
 
 	@Override

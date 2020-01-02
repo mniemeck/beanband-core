@@ -17,6 +17,8 @@ import org.beanband.model.song.Note;
  * @see VoicingAnnotation
  */
 public class ScaleAnnotation extends MusicAnnotation<Chord> {
+	
+	// TODO Make more generic (enum like in VoicingAnnotation)
 
 	private Note bassNote;
 

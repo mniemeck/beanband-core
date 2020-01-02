@@ -37,7 +37,6 @@ public class GuitarVoicingArranger extends Arranger {
 
 	@Override
 	public void annotate(Song song) throws InvalidMidiDataException {
-		// TODO Refactor using output of ScaleArranger.
 		for (Bar bar : song.getBars()) {
 			for (Chord chord : bar.getChords()) {
 				if (chord.getRoot() != null) {

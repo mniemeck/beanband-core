@@ -47,6 +47,13 @@ public class VoicingAnnotation extends MusicAnnotation<Chord> {
 		 */
 		GUITAR_BASIC;
 	}
+	
+	// TODO AlgorithmicGuitarVoicingArranger based on ChordAnnotation. Score-based optimization.
+	
+	// - Barree position (distance from last position)
+	// - 3 fingers placed (anatomical possibility)
+	// - Skip strings bottom-up
+	// Score based on contained function notes
 
 	private final Map<Type, List<NotePitch>> voicings = new HashMap<>();
 
