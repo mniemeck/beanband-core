@@ -11,7 +11,7 @@ import org.beanband.model.midi.MidiNoteElement;
 import org.beanband.model.midi.MidiProgramChangeElement;
 import org.beanband.model.midi.NotePitch;
 import org.beanband.model.music.VoicingAnnotation;
-import org.beanband.model.music.VoicingAnnotation.Type;
+import org.beanband.model.music.VoicingAnnotation.VoicingType;
 import org.beanband.model.song.Bar;
 import org.beanband.model.song.Chord;
 
@@ -90,7 +90,7 @@ public class BasicFourBeatBassMusician extends Musician {
 		if (voicingAnnotation == null) {
 			return null;
 		}
-		List<NotePitch> voicing = voicingAnnotation.getVoicing(Type.BASS_BASIC);
+		List<NotePitch> voicing = voicingAnnotation.getVoicing(VoicingType.BASS_BASIC);
 		if (voicing.isEmpty()) {
 			return null;
 		}

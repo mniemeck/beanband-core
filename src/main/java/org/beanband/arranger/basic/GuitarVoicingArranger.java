@@ -5,7 +5,7 @@ import javax.sound.midi.InvalidMidiDataException;
 import org.beanband.arranger.Arranger;
 import org.beanband.model.midi.NotePitch;
 import org.beanband.model.music.VoicingAnnotation;
-import org.beanband.model.music.VoicingAnnotation.Type;
+import org.beanband.model.music.VoicingAnnotation.VoicingType;
 import org.beanband.model.song.Bar;
 import org.beanband.model.song.Chord;
 import org.beanband.model.song.Eleventh;
@@ -31,7 +31,7 @@ import org.beanband.model.song.Thirteenth;
  * 
  * @author Michael Niemeck
  * @see VoicingAnnotation
- * @see VoicingAnnotation.Type#GUITAR_BASIC
+ * @see VoicingAnnotation.VoicingType#GUITAR_BASIC
  */
 public class GuitarVoicingArranger extends Arranger {
 
@@ -57,52 +57,52 @@ public class GuitarVoicingArranger extends Arranger {
 	private void createType1Voicing(Chord chord, int offset) throws InvalidMidiDataException {
 		VoicingAnnotation voicingAnnotation = chord.getOrCreateAnnotation(VoicingAnnotation.class);
 		int currentStringPitch = 40 + offset;
-		voicingAnnotation.addNotePitch(Type.GUITAR_BASIC, new NotePitch(currentStringPitch));
+		voicingAnnotation.addNotePitch(VoicingType.GUITAR_BASIC, new NotePitch(currentStringPitch));
 		currentStringPitch += 5;
 		if (chord.getFifth() == Fifth.DIM) {
-			voicingAnnotation.addNotePitch(Type.GUITAR_BASIC, new NotePitch(currentStringPitch + 1));
+			voicingAnnotation.addNotePitch(VoicingType.GUITAR_BASIC, new NotePitch(currentStringPitch + 1));
 		} else if (chord.getFifth() == Fifth.PERFECT) {
-			voicingAnnotation.addNotePitch(Type.GUITAR_BASIC, new NotePitch(currentStringPitch + 2));
+			voicingAnnotation.addNotePitch(VoicingType.GUITAR_BASIC, new NotePitch(currentStringPitch + 2));
 		} else if (chord.getFifth() == Fifth.AUG) {
-			voicingAnnotation.addNotePitch(Type.GUITAR_BASIC, new NotePitch(currentStringPitch + 3));
+			voicingAnnotation.addNotePitch(VoicingType.GUITAR_BASIC, new NotePitch(currentStringPitch + 3));
 		}
 		currentStringPitch += 5;
 		if (chord.getSeventh() == Seventh.MIN) {
-			voicingAnnotation.addNotePitch(Type.GUITAR_BASIC, new NotePitch(currentStringPitch));
+			voicingAnnotation.addNotePitch(VoicingType.GUITAR_BASIC, new NotePitch(currentStringPitch));
 		} else if (chord.getSeventh() == Seventh.MAJ) {
-			voicingAnnotation.addNotePitch(Type.GUITAR_BASIC, new NotePitch(currentStringPitch + 1));
+			voicingAnnotation.addNotePitch(VoicingType.GUITAR_BASIC, new NotePitch(currentStringPitch + 1));
 		} else {
-			voicingAnnotation.addNotePitch(Type.GUITAR_BASIC, new NotePitch(currentStringPitch + 2));
+			voicingAnnotation.addNotePitch(VoicingType.GUITAR_BASIC, new NotePitch(currentStringPitch + 2));
 		}
 		currentStringPitch += 5;
 		if (chord.getThird() == Third.MIN) {
-			voicingAnnotation.addNotePitch(Type.GUITAR_BASIC, new NotePitch(currentStringPitch));
+			voicingAnnotation.addNotePitch(VoicingType.GUITAR_BASIC, new NotePitch(currentStringPitch));
 		} else if ((chord.getThird() == Third.MAJ) || (chord.getEleventh() == Eleventh.DIM)) {
-			voicingAnnotation.addNotePitch(Type.GUITAR_BASIC, new NotePitch(currentStringPitch + 1));
+			voicingAnnotation.addNotePitch(VoicingType.GUITAR_BASIC, new NotePitch(currentStringPitch + 1));
 		} else if ((chord.getThird() == Third.SUS4) || (chord.getEleventh() == Eleventh.PERFECT)) {
-			voicingAnnotation.addNotePitch(Type.GUITAR_BASIC, new NotePitch(currentStringPitch + 2));
+			voicingAnnotation.addNotePitch(VoicingType.GUITAR_BASIC, new NotePitch(currentStringPitch + 2));
 		} else if (chord.getEleventh() == Eleventh.AUG) {
-			voicingAnnotation.addNotePitch(Type.GUITAR_BASIC, new NotePitch(currentStringPitch + 3));
+			voicingAnnotation.addNotePitch(VoicingType.GUITAR_BASIC, new NotePitch(currentStringPitch + 3));
 		}
 		currentStringPitch += 4;
 		if ((chord.getFifth() == Fifth.AUG) || (chord.getThirteenth() == Thirteenth.MIN)) {
-			voicingAnnotation.addNotePitch(Type.GUITAR_BASIC, new NotePitch(currentStringPitch + 1));
+			voicingAnnotation.addNotePitch(VoicingType.GUITAR_BASIC, new NotePitch(currentStringPitch + 1));
 		} else if ((chord.getSeventh() == Seventh.SIXTH) || (chord.getThirteenth() == Thirteenth.MAJ)) {
-			voicingAnnotation.addNotePitch(Type.GUITAR_BASIC, new NotePitch(currentStringPitch + 2));
+			voicingAnnotation.addNotePitch(VoicingType.GUITAR_BASIC, new NotePitch(currentStringPitch + 2));
 		} else if (chord.getThirteenth() == Thirteenth.AUG) {
-			voicingAnnotation.addNotePitch(Type.GUITAR_BASIC, new NotePitch(currentStringPitch + 3));
+			voicingAnnotation.addNotePitch(VoicingType.GUITAR_BASIC, new NotePitch(currentStringPitch + 3));
 		} else if (chord.getFifth() == Fifth.PERFECT) {
-			voicingAnnotation.addNotePitch(Type.GUITAR_BASIC, new NotePitch(currentStringPitch));
+			voicingAnnotation.addNotePitch(VoicingType.GUITAR_BASIC, new NotePitch(currentStringPitch));
 		}
 		currentStringPitch += 5;
 		if (chord.getNinth() == Ninth.MIN) {
-			voicingAnnotation.addNotePitch(Type.GUITAR_BASIC, new NotePitch(currentStringPitch + 1));
+			voicingAnnotation.addNotePitch(VoicingType.GUITAR_BASIC, new NotePitch(currentStringPitch + 1));
 		} else if ((chord.getThird() == Third.SUS2) || (chord.getNinth() == Ninth.MAJ)) {
-			voicingAnnotation.addNotePitch(Type.GUITAR_BASIC, new NotePitch(currentStringPitch + 2));
+			voicingAnnotation.addNotePitch(VoicingType.GUITAR_BASIC, new NotePitch(currentStringPitch + 2));
 		} else if ((chord.getThird() == Third.MIN) || (chord.getNinth() == Ninth.AUG)) {
-			voicingAnnotation.addNotePitch(Type.GUITAR_BASIC, new NotePitch(currentStringPitch + 3));
+			voicingAnnotation.addNotePitch(VoicingType.GUITAR_BASIC, new NotePitch(currentStringPitch + 3));
 		} else {
-			voicingAnnotation.addNotePitch(Type.GUITAR_BASIC, new NotePitch(currentStringPitch));
+			voicingAnnotation.addNotePitch(VoicingType.GUITAR_BASIC, new NotePitch(currentStringPitch));
 		}
 	}
 
@@ -110,47 +110,47 @@ public class GuitarVoicingArranger extends Arranger {
 		VoicingAnnotation voicingAnnotation = chord.getOrCreateAnnotation(VoicingAnnotation.class);
 		int currentStringPitch = 40 + offset;
 		if (chord.getFifth() == Fifth.PERFECT) {
-			voicingAnnotation.addNotePitch(Type.GUITAR_BASIC, new NotePitch(currentStringPitch));
+			voicingAnnotation.addNotePitch(VoicingType.GUITAR_BASIC, new NotePitch(currentStringPitch));
 		}
 		currentStringPitch += 5;
-		voicingAnnotation.addNotePitch(Type.GUITAR_BASIC, new NotePitch(currentStringPitch));
+		voicingAnnotation.addNotePitch(VoicingType.GUITAR_BASIC, new NotePitch(currentStringPitch));
 		currentStringPitch += 5;
 		if ((chord.getFifth() == Fifth.DIM) || (chord.getEleventh() == Eleventh.AUG)) {
-			voicingAnnotation.addNotePitch(Type.GUITAR_BASIC, new NotePitch(currentStringPitch + 1));
+			voicingAnnotation.addNotePitch(VoicingType.GUITAR_BASIC, new NotePitch(currentStringPitch + 1));
 		} else if ((chord.getFifth() == Fifth.AUG) || (chord.getThirteenth() == Thirteenth.MIN)) {
-			voicingAnnotation.addNotePitch(Type.GUITAR_BASIC, new NotePitch(currentStringPitch + 3));
+			voicingAnnotation.addNotePitch(VoicingType.GUITAR_BASIC, new NotePitch(currentStringPitch + 3));
 		} else if (chord.getFifth() == Fifth.PERFECT) {
-			voicingAnnotation.addNotePitch(Type.GUITAR_BASIC, new NotePitch(currentStringPitch + 2));
+			voicingAnnotation.addNotePitch(VoicingType.GUITAR_BASIC, new NotePitch(currentStringPitch + 2));
 		}
 		currentStringPitch += 5;
 		if (chord.getSeventh() == Seventh.MIN) {
-			voicingAnnotation.addNotePitch(Type.GUITAR_BASIC, new NotePitch(currentStringPitch));
+			voicingAnnotation.addNotePitch(VoicingType.GUITAR_BASIC, new NotePitch(currentStringPitch));
 		} else if (chord.getSeventh() == Seventh.MAJ) {
-			voicingAnnotation.addNotePitch(Type.GUITAR_BASIC, new NotePitch(currentStringPitch + 1));
+			voicingAnnotation.addNotePitch(VoicingType.GUITAR_BASIC, new NotePitch(currentStringPitch + 1));
 		} else if (chord.getNinth() == Ninth.MIN) {
-			voicingAnnotation.addNotePitch(Type.GUITAR_BASIC, new NotePitch(currentStringPitch + 3));
+			voicingAnnotation.addNotePitch(VoicingType.GUITAR_BASIC, new NotePitch(currentStringPitch + 3));
 		} else {
-			voicingAnnotation.addNotePitch(Type.GUITAR_BASIC, new NotePitch(currentStringPitch + 2));
+			voicingAnnotation.addNotePitch(VoicingType.GUITAR_BASIC, new NotePitch(currentStringPitch + 2));
 		}
 		currentStringPitch += 4;
 		if ((chord.getThird() == Third.SUS2) || (chord.getNinth() == Ninth.MAJ)) {
-			voicingAnnotation.addNotePitch(Type.GUITAR_BASIC, new NotePitch(currentStringPitch));
+			voicingAnnotation.addNotePitch(VoicingType.GUITAR_BASIC, new NotePitch(currentStringPitch));
 		} else if ((chord.getThird() == Third.MIN) || (chord.getNinth() == Ninth.AUG)) {
-			voicingAnnotation.addNotePitch(Type.GUITAR_BASIC, new NotePitch(currentStringPitch + 1));
+			voicingAnnotation.addNotePitch(VoicingType.GUITAR_BASIC, new NotePitch(currentStringPitch + 1));
 		} else if ((chord.getThird() == Third.MAJ) || (chord.getEleventh() == Eleventh.DIM)) {
-			voicingAnnotation.addNotePitch(Type.GUITAR_BASIC, new NotePitch(currentStringPitch + 2));
+			voicingAnnotation.addNotePitch(VoicingType.GUITAR_BASIC, new NotePitch(currentStringPitch + 2));
 		} else if ((chord.getThird() == Third.SUS4) || (chord.getEleventh() == Eleventh.PERFECT)) {
-			voicingAnnotation.addNotePitch(Type.GUITAR_BASIC, new NotePitch(currentStringPitch + 3));
+			voicingAnnotation.addNotePitch(VoicingType.GUITAR_BASIC, new NotePitch(currentStringPitch + 3));
 		}
 		currentStringPitch += 5;
 		if ((chord.getFifth() == Fifth.AUG) || (chord.getThirteenth() == Thirteenth.MIN)) {
-			voicingAnnotation.addNotePitch(Type.GUITAR_BASIC, new NotePitch(currentStringPitch + 1));
+			voicingAnnotation.addNotePitch(VoicingType.GUITAR_BASIC, new NotePitch(currentStringPitch + 1));
 		} else if ((chord.getSeventh() == Seventh.SIXTH) || (chord.getThirteenth() == Thirteenth.MAJ)) {
-			voicingAnnotation.addNotePitch(Type.GUITAR_BASIC, new NotePitch(currentStringPitch + 2));
+			voicingAnnotation.addNotePitch(VoicingType.GUITAR_BASIC, new NotePitch(currentStringPitch + 2));
 		} else if (chord.getThirteenth() == Thirteenth.AUG) {
-			voicingAnnotation.addNotePitch(Type.GUITAR_BASIC, new NotePitch(currentStringPitch + 3));
+			voicingAnnotation.addNotePitch(VoicingType.GUITAR_BASIC, new NotePitch(currentStringPitch + 3));
 		} else if (chord.getFifth() == Fifth.PERFECT) {
-			voicingAnnotation.addNotePitch(Type.GUITAR_BASIC, new NotePitch(currentStringPitch));
+			voicingAnnotation.addNotePitch(VoicingType.GUITAR_BASIC, new NotePitch(currentStringPitch));
 		}
 	}
 
@@ -159,37 +159,37 @@ public class GuitarVoicingArranger extends Arranger {
 		int currentStringPitch = 40 + offset;
 		currentStringPitch += 5;
 		if (chord.getFifth() == Fifth.PERFECT) {
-			voicingAnnotation.addNotePitch(Type.GUITAR_BASIC, new NotePitch(currentStringPitch));
+			voicingAnnotation.addNotePitch(VoicingType.GUITAR_BASIC, new NotePitch(currentStringPitch));
 		}
 		currentStringPitch += 5;
-		voicingAnnotation.addNotePitch(Type.GUITAR_BASIC, new NotePitch(currentStringPitch));
+		voicingAnnotation.addNotePitch(VoicingType.GUITAR_BASIC, new NotePitch(currentStringPitch));
 		currentStringPitch += 5;
 		if ((chord.getFifth() == Fifth.DIM) || (chord.getEleventh() == Eleventh.AUG)) {
-			voicingAnnotation.addNotePitch(Type.GUITAR_BASIC, new NotePitch(currentStringPitch + 1));
+			voicingAnnotation.addNotePitch(VoicingType.GUITAR_BASIC, new NotePitch(currentStringPitch + 1));
 		} else if ((chord.getFifth() == Fifth.AUG) || (chord.getThirteenth() == Thirteenth.MIN)) {
-			voicingAnnotation.addNotePitch(Type.GUITAR_BASIC, new NotePitch(currentStringPitch + 3));
+			voicingAnnotation.addNotePitch(VoicingType.GUITAR_BASIC, new NotePitch(currentStringPitch + 3));
 		} else if (chord.getFifth() == Fifth.PERFECT) {
-			voicingAnnotation.addNotePitch(Type.GUITAR_BASIC, new NotePitch(currentStringPitch + 2));
+			voicingAnnotation.addNotePitch(VoicingType.GUITAR_BASIC, new NotePitch(currentStringPitch + 2));
 		}
 		currentStringPitch += 4;
 		if ((chord.getSeventh() == Seventh.SIXTH) || (chord.getThirteenth() == Thirteenth.MAJ)) {
-			voicingAnnotation.addNotePitch(Type.GUITAR_BASIC, new NotePitch(currentStringPitch));
+			voicingAnnotation.addNotePitch(VoicingType.GUITAR_BASIC, new NotePitch(currentStringPitch));
 		} else if ((chord.getSeventh() == Seventh.MIN) || (chord.getThirteenth() == Thirteenth.AUG)) {
-			voicingAnnotation.addNotePitch(Type.GUITAR_BASIC, new NotePitch(currentStringPitch + 1));
+			voicingAnnotation.addNotePitch(VoicingType.GUITAR_BASIC, new NotePitch(currentStringPitch + 1));
 		} else if (chord.getSeventh() == Seventh.MAJ) {
-			voicingAnnotation.addNotePitch(Type.GUITAR_BASIC, new NotePitch(currentStringPitch + 2));
+			voicingAnnotation.addNotePitch(VoicingType.GUITAR_BASIC, new NotePitch(currentStringPitch + 2));
 		} else {
-			voicingAnnotation.addNotePitch(Type.GUITAR_BASIC, new NotePitch(currentStringPitch + 3));
+			voicingAnnotation.addNotePitch(VoicingType.GUITAR_BASIC, new NotePitch(currentStringPitch + 3));
 		}
 		currentStringPitch += 5;
 		if ((chord.getThird() == Third.SUS2) || (chord.getNinth() == Ninth.MAJ)) {
-			voicingAnnotation.addNotePitch(Type.GUITAR_BASIC, new NotePitch(currentStringPitch));
+			voicingAnnotation.addNotePitch(VoicingType.GUITAR_BASIC, new NotePitch(currentStringPitch));
 		} else if ((chord.getThird() == Third.MIN) || (chord.getNinth() == Ninth.AUG)) {
-			voicingAnnotation.addNotePitch(Type.GUITAR_BASIC, new NotePitch(currentStringPitch + 1));
+			voicingAnnotation.addNotePitch(VoicingType.GUITAR_BASIC, new NotePitch(currentStringPitch + 1));
 		} else if ((chord.getThird() == Third.MAJ) || (chord.getEleventh() == Eleventh.DIM)) {
-			voicingAnnotation.addNotePitch(Type.GUITAR_BASIC, new NotePitch(currentStringPitch + 2));
+			voicingAnnotation.addNotePitch(VoicingType.GUITAR_BASIC, new NotePitch(currentStringPitch + 2));
 		} else if ((chord.getThird() == Third.SUS4) || (chord.getEleventh() == Eleventh.PERFECT)) {
-			voicingAnnotation.addNotePitch(Type.GUITAR_BASIC, new NotePitch(currentStringPitch + 3));
+			voicingAnnotation.addNotePitch(VoicingType.GUITAR_BASIC, new NotePitch(currentStringPitch + 3));
 		}
 	}
 	

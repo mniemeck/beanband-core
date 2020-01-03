@@ -14,7 +14,7 @@ import org.beanband.model.midi.NotePitch;
 import org.beanband.model.music.BandAnnotation;
 import org.beanband.model.music.ProgressionAnnotation;
 import org.beanband.model.music.VoicingAnnotation;
-import org.beanband.model.music.VoicingAnnotation.Type;
+import org.beanband.model.music.VoicingAnnotation.VoicingType;
 import org.beanband.model.song.Bar;
 import org.beanband.model.song.Chord;
 
@@ -64,8 +64,8 @@ public class BasicFourBeatGuitarMusician extends Musician {
 
 	private void addFullBar(Chord chord, double start, long msPerBar) throws InvalidMidiDataException {
 		List<NotePitch> voicing = extractGuitarVoicing(chord);
-		createRandomizedElement(voicing, start, 0.5 * 0.75, 80);
-		createRandomizedElement(voicing, start + 0.5, 0.5 * 0.75, 65);
+		addRandomizedElement(voicing, start, 0.5 * 0.75, 80);
+		addRandomizedElement(voicing, start + 0.5, 0.5 * 0.75, 65);
 		if (isChangeAfter(chord)) {
 			addFretNoise(start + 0.5 + 0.5 * 0.75, 0.5 * 0.25, msPerBar);
 		}
@@ -73,8 +73,8 @@ public class BasicFourBeatGuitarMusician extends Musician {
 
 	private void addHalfBar(Chord chord, double start, long msPerBar) throws InvalidMidiDataException {
 		List<NotePitch> voicing = extractGuitarVoicing(chord);
-		createRandomizedElement(voicing, start, 0.25 * 0.75, 85);
-		createRandomizedElement(voicing, start + 0.25, 0.25 * 0.75, 50);
+		addRandomizedElement(voicing, start, 0.25 * 0.75, 85);
+		addRandomizedElement(voicing, start + 0.25, 0.25 * 0.75, 50);
 		if (isChangeAfter(chord)) {
 			addFretNoise(start + 0.25 + 0.25 * 0.75, 0.25 * 0.25, msPerBar);
 		}
@@ -82,7 +82,7 @@ public class BasicFourBeatGuitarMusician extends Musician {
 	
 	private void addQuarterBar(Chord chord, double start, long msPerBar) throws InvalidMidiDataException {
 		List<NotePitch> voicing = extractGuitarVoicing(chord);
-		createRandomizedElement(voicing, start, 0.25 * 0.75, 85);
+		addRandomizedElement(voicing, start, 0.25 * 0.75, 85);
 		if (isChangeAfter(chord)) {
 			addFretNoise(start + 0.25 * 0.75, 0.25 * 0.25, msPerBar);
 		}
@@ -104,7 +104,7 @@ public class BasicFourBeatGuitarMusician extends Musician {
 		return Math.round(60000 / bandAnnotation.getTempo() * bandAnnotation.getBand().getBeatsPerBar());
 	}
 	
-	private void createRandomizedElement(List<NotePitch> voicing, double start, double duration, int onVelocity)
+	private void addRandomizedElement(List<NotePitch> voicing, double start, double duration, int onVelocity)
 			throws InvalidMidiDataException {
 		double actualStart = random.nextGaussian() * START_DEVIATION + start;
 		double actualDuration = random.nextGaussian() * DURATION_DEVIATION + duration;
@@ -145,7 +145,7 @@ public class BasicFourBeatGuitarMusician extends Musician {
 		if (voicingAnnotation == null) {
 			return Collections.emptyList();
 		}
-		return voicingAnnotation.getVoicing(Type.GUITAR_BASIC);
+		return voicingAnnotation.getVoicing(VoicingType.GUITAR_BASIC);
 	}
 
 }

@@ -36,7 +36,7 @@ public class VoicingAnnotation extends MusicAnnotation<Chord> {
 	 * @author Michael Niemeck
 	 *
 	 */
-	public enum Type {
+	public enum VoicingType {
 		/**
 		 * A very basic voicing for (double-) bass. Currently only contains the bass
 		 * note.
@@ -48,7 +48,7 @@ public class VoicingAnnotation extends MusicAnnotation<Chord> {
 		GUITAR_BASIC;
 	}
 	
-	private final Map<Type, List<NotePitch>> voicings = new HashMap<>();
+	private final Map<VoicingType, List<NotePitch>> voicings = new HashMap<>();
 
 	/**
 	 * Adds a pitch to the specified type of voicing. The order in which the pitches
@@ -57,7 +57,7 @@ public class VoicingAnnotation extends MusicAnnotation<Chord> {
 	 * @param type      The {@code Type} of voicing to which to add the pitch.
 	 * @param notePitch The {@code NotePitch} to add to the voicing.
 	 */
-	public void addNotePitch(Type type, NotePitch notePitch) {
+	public void addNotePitch(VoicingType type, NotePitch notePitch) {
 		if (!voicings.containsKey(type)) {
 			voicings.put(type, new ArrayList<>());
 		}
@@ -73,7 +73,7 @@ public class VoicingAnnotation extends MusicAnnotation<Chord> {
 	 *         in which they were added to the voicing of this {@code Type}. Returns
 	 *         an empty {@code List}, if no pitches have been added yet.
 	 */
-	public List<NotePitch> getVoicing(Type type) {
+	public List<NotePitch> getVoicing(VoicingType type) {
 		if (voicings.get(type) == null) {
 			return Collections.emptyList();
 		}
@@ -83,7 +83,7 @@ public class VoicingAnnotation extends MusicAnnotation<Chord> {
 	@Override
 	public String toString() {
 		String string = super.toString();
-		for (Type type : voicings.keySet()) {
+		for (VoicingType type : voicings.keySet()) {
 			string += "[" + type.toString();
 			for (NotePitch notePitch : voicings.get(type)) {
 				string += "," + notePitch.getNote().toString() + notePitch.getOctave();

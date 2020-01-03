@@ -5,8 +5,9 @@ import javax.sound.midi.InvalidMidiDataException;
 import org.beanband.arranger.Arranger;
 import org.beanband.model.midi.NotePitch;
 import org.beanband.model.music.ScaleAnnotation;
+import org.beanband.model.music.ScaleAnnotation.ScaleType;
 import org.beanband.model.music.VoicingAnnotation;
-import org.beanband.model.music.VoicingAnnotation.Type;
+import org.beanband.model.music.VoicingAnnotation.VoicingType;
 import org.beanband.model.song.Bar;
 import org.beanband.model.song.Chord;
 import org.beanband.model.song.Note;
@@ -20,7 +21,7 @@ import org.beanband.model.song.Song;
  * 
  * @author Michael Niemeck
  * @see VoicingAnnotation
- * @see VoicingAnnotation.Type#BASS_BASIC
+ * @see VoicingAnnotation.VoicingType#BASS_BASIC
  */
 public class BassLineArranger extends Arranger {
 
@@ -38,7 +39,7 @@ public class BassLineArranger extends Arranger {
 				if (note != null) {
 					NotePitch notePitch = movePitchInRange(getNearestPitch(note, referencePitch), lowestPitch,
 							highestPitch);
-					chord.getOrCreateAnnotation(VoicingAnnotation.class).addNotePitch(Type.BASS_BASIC, notePitch);
+					chord.getOrCreateAnnotation(VoicingAnnotation.class).addNotePitch(VoicingType.BASS_BASIC, notePitch);
 					referencePitch = notePitch;
 				}
 			}
@@ -50,7 +51,10 @@ public class BassLineArranger extends Arranger {
 		if (scaleAnnotation == null) {
 			return null;
 		}
-		return scaleAnnotation.getBassNote();
+		if (scaleAnnotation.getScale(ScaleType.BASS_NOTE).isEmpty()) {
+			return null;
+		}
+		return scaleAnnotation.getScale(ScaleType.BASS_NOTE).get(0);
 	}
 
 	private NotePitch getNearestPitch(Note note, NotePitch referencePitch) throws InvalidMidiDataException {
