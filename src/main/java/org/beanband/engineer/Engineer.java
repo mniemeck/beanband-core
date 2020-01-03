@@ -123,7 +123,7 @@ public class Engineer {
 		Collection<MidiEvent> midiEvents = new ArrayList<>();
 		for (MidiElement midiElement : midiElements) {
 			for (MidiEvent midiEvent : midiElement.getMidiEvents(currentChannel, ticksPerBar)) {
-				midiEvent.setTick(midiEvent.getTick() + tickOffset);
+				midiEvent.setTick(Math.max(0, midiEvent.getTick() + tickOffset));
 				midiEvents.add(midiEvent);
 			}
 		}

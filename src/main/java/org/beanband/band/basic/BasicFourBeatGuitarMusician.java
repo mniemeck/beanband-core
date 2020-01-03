@@ -30,10 +30,13 @@ public class BasicFourBeatGuitarMusician extends Musician {
 	
 	private static final double FRET_PROBABILITY_MEAN = 125.0;
 	private static final double FRET_PROBABILIY_DEV = 175.0;
-	private static final double FRET_DURATION_MEAN = 0.1;
-	private static final double FRET_DURATION_DEV = 0.001;
 	private static final int FRET_PITCH_MIN = 20;
 	private static final int FRET_PITCH_MAX = 100;
+	
+	private static final double START_DEVIATION = 0.003;
+	private static final double DURATION_DEVIATION = 0.003;
+	private static final double ON_VELOCITY_DEVIATION = 2.0;
+	private static final int OFF_VELOCITY = 127;
 	
 	private final Random random = new Random();
 
@@ -61,10 +64,8 @@ public class BasicFourBeatGuitarMusician extends Musician {
 
 	private void addFullBar(Chord chord, double start, long msPerBar) throws InvalidMidiDataException {
 		List<NotePitch> voicing = extractGuitarVoicing(chord);
-		for (NotePitch notePitch : voicing) {
-			addElement(new MidiNoteElement(notePitch, start, 0.5 * 0.75, 80, 127));
-			addElement(new MidiNoteElement(notePitch, start + 0.5, 0.5 * 0.75, 65, 127));
-		}
+		createRandomizedElement(voicing, start, 0.5 * 0.75, 80);
+		createRandomizedElement(voicing, start + 0.5, 0.5 * 0.75, 65);
 		if (isChangeAfter(chord)) {
 			addFretNoise(start + 0.5 + 0.5 * 0.75, 0.5 * 0.25, msPerBar);
 		}
@@ -72,10 +73,8 @@ public class BasicFourBeatGuitarMusician extends Musician {
 
 	private void addHalfBar(Chord chord, double start, long msPerBar) throws InvalidMidiDataException {
 		List<NotePitch> voicing = extractGuitarVoicing(chord);
-		for (NotePitch notePitch : voicing) {
-			addElement(new MidiNoteElement(notePitch, start, 0.25 * 0.75, 82, 127));
-			addElement(new MidiNoteElement(notePitch, start + 0.25, 0.25 * 0.75, 50, 127));
-		}
+		createRandomizedElement(voicing, start, 0.25 * 0.75, 85);
+		createRandomizedElement(voicing, start + 0.25, 0.25 * 0.75, 50);
 		if (isChangeAfter(chord)) {
 			addFretNoise(start + 0.25 + 0.25 * 0.75, 0.25 * 0.25, msPerBar);
 		}
@@ -83,9 +82,7 @@ public class BasicFourBeatGuitarMusician extends Musician {
 	
 	private void addQuarterBar(Chord chord, double start, long msPerBar) throws InvalidMidiDataException {
 		List<NotePitch> voicing = extractGuitarVoicing(chord);
-		for (NotePitch notePitch : voicing) {
-			addElement(new MidiNoteElement(notePitch, start, 0.25 * 0.75, 87, 127));
-		}
+		createRandomizedElement(voicing, start, 0.25 * 0.75, 85);
 		if (isChangeAfter(chord)) {
 			addFretNoise(start + 0.25 * 0.75, 0.25 * 0.25, msPerBar);
 		}
@@ -107,6 +104,20 @@ public class BasicFourBeatGuitarMusician extends Musician {
 		return Math.round(60000 / bandAnnotation.getTempo() * bandAnnotation.getBand().getBeatsPerBar());
 	}
 	
+	private void createRandomizedElement(List<NotePitch> voicing, double start, double duration, int onVelocity)
+			throws InvalidMidiDataException {
+		double actualStart = random.nextGaussian() * START_DEVIATION + start;
+		double actualDuration = random.nextGaussian() * DURATION_DEVIATION + duration;
+		int actualOnVelocity = (int) Math.round(random.nextGaussian() * ON_VELOCITY_DEVIATION + onVelocity);
+		actualOnVelocity = Math.max(0, actualOnVelocity);
+		actualOnVelocity = Math.min(127, actualOnVelocity);
+		int actualOffVelocity = OFF_VELOCITY;
+
+		for (NotePitch notePitch : voicing) {
+			addElement(new MidiNoteElement(notePitch, actualStart, actualDuration, actualOnVelocity, actualOffVelocity));
+		}
+	}
+
 	private void addFretNoise(double start, double duration, long msPerBar) throws InvalidMidiDataException {
 		if (random.nextGaussian() * FRET_PROBABILIY_DEV + FRET_PROBABILITY_MEAN <= (duration * msPerBar)) {
 			return;
@@ -115,8 +126,13 @@ public class BasicFourBeatGuitarMusician extends Musician {
 		double startMean = start + duration / 2;
 		double startDev = duration / 6;
 				
-		double actualStart = random.nextGaussian() * startDev + startMean;
-		double actualDuration = random.nextGaussian() * FRET_DURATION_DEV + FRET_DURATION_MEAN;
+		double actualStart = Math.max(0.00025, random.nextGaussian() * startDev + startMean);
+		
+		double durationMean = duration / 2;
+		double durationDev = duration / 100;
+		
+		double actualDuration = random.nextGaussian() * durationDev + durationMean;
+		
 		NotePitch actualPitch = new NotePitch(FRET_PITCH_MIN + random.nextInt(FRET_PITCH_MAX - FRET_PITCH_MIN));
 		
 		addElement(new MidiProgramChangeElement(InstrumentPatch.GUITAR_FRET_NOISE, actualStart - 0.01));

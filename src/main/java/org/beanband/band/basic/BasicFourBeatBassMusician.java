@@ -1,6 +1,7 @@
 package org.beanband.band.basic;
 
 import java.util.List;
+import java.util.Random;
 
 import javax.sound.midi.InvalidMidiDataException;
 
@@ -23,6 +24,13 @@ import org.beanband.model.song.Chord;
  */
 public class BasicFourBeatBassMusician extends Musician {
 
+	private static final double START_DEVIATION = 0.003;
+	private static final double DURATION_DEVIATION = 0.003;
+	private static final double ON_VELOCITY_DEVIATION = 2.0;
+	private static final int OFF_VELOCITY = 127;
+	
+	private final Random random = new Random();
+	
 	@Override
 	protected void createElements(Bar bar) throws InvalidMidiDataException {
 		addElement(new MidiProgramChangeElement(InstrumentPatch.ACOUSTIC_BASS, 0.0));
@@ -46,23 +54,35 @@ public class BasicFourBeatBassMusician extends Musician {
 	private void addStrongHalfBar(Chord chord, double start) throws InvalidMidiDataException {
 		NotePitch bassNote = extractBassNote(chord);
 		if (bassNote != null) {
-			addElement(new MidiNoteElement(bassNote, start + 0.0, 0.375 * 0.75, 120, 127));
-			addElement(new MidiNoteElement(bassNote, start + 0.375, 0.125 * 0.75, 100, 127));
+			addRandomizedElement(bassNote, start + 0.0, 0.375 * 0.75, 120);
+			addRandomizedElement(bassNote, start + 0.375, 0.125 * 0.75, 100);
 		}
 	}
 
 	private void addWeakHalfBar(Chord chord, double start) throws InvalidMidiDataException {
 		NotePitch bassNote = extractBassNote(chord);
 		if (bassNote != null) {
-			addElement(new MidiNoteElement(bassNote, start + 0.0, 0.375 * 0.75, 122, 127));
+			addRandomizedElement(bassNote, start + 0.0, 0.375 * 0.75, 122);
 		}
 	}
 	
 	private void addQuarterBar(Chord chord, double start) throws InvalidMidiDataException {
 		NotePitch bassNote = extractBassNote(chord);
 		if (bassNote != null) {
-			addElement(new MidiNoteElement(bassNote, start + 0.0, 0.25 * 0.75, 125, 127));
+			addRandomizedElement(bassNote, start + 0.0, 0.25 * 0.75, 125);
 		}
+	}
+
+	private void addRandomizedElement(NotePitch pitch, double start, double duration, int onVelocity)
+			throws InvalidMidiDataException {
+		double actualStart = Math.max(0.00025, random.nextGaussian() * START_DEVIATION + start);
+		double actualDuration = random.nextGaussian() * DURATION_DEVIATION + duration;
+		int actualOnVelocity = (int) Math.round(random.nextGaussian() * ON_VELOCITY_DEVIATION + onVelocity);
+		actualOnVelocity = Math.max(0, actualOnVelocity);
+		actualOnVelocity = Math.min(127, actualOnVelocity);
+		int actualOffVelocity = OFF_VELOCITY;
+
+		addElement(new MidiNoteElement(pitch, actualStart, actualDuration, actualOnVelocity, actualOffVelocity));
 	}
 
 	private NotePitch extractBassNote(Chord chord) {
