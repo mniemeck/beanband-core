@@ -16,10 +16,5 @@ public class PianoVoicingArranger extends Arranger {
 	public void annotate(Song song) throws InvalidMidiDataException {
 		// Calculate one or more piano voicings.
 	}
-	
-	@Override
-	protected int getPriority() {
-		return Integer.MAX_VALUE - 2;
-	}
 
 }

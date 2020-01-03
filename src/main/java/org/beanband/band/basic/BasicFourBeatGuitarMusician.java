@@ -106,7 +106,7 @@ public class BasicFourBeatGuitarMusician extends Musician {
 	
 	private void addRandomizedElement(List<NotePitch> voicing, double start, double duration, int onVelocity)
 			throws InvalidMidiDataException {
-		double actualStart = random.nextGaussian() * START_DEVIATION + start;
+		double actualStart = Math.max(0.00025, random.nextGaussian() * START_DEVIATION + start);
 		double actualDuration = random.nextGaussian() * DURATION_DEVIATION + duration;
 		int actualOnVelocity = (int) Math.round(random.nextGaussian() * ON_VELOCITY_DEVIATION + onVelocity);
 		actualOnVelocity = Math.max(0, actualOnVelocity);
