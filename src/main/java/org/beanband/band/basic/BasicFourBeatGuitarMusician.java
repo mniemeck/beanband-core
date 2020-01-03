@@ -12,6 +12,7 @@ import org.beanband.model.midi.MidiNoteElement;
 import org.beanband.model.midi.MidiProgramChangeElement;
 import org.beanband.model.midi.NotePitch;
 import org.beanband.model.music.BandAnnotation;
+import org.beanband.model.music.ProgressionAnnotation;
 import org.beanband.model.music.VoicingAnnotation;
 import org.beanband.model.music.VoicingAnnotation.Type;
 import org.beanband.model.song.Bar;
@@ -27,11 +28,6 @@ import org.beanband.model.song.Chord;
  */
 public class BasicFourBeatGuitarMusician extends Musician {
 	
-	// TODO FretNoise logic more generic
-	
-	// - Only when changeAfter (cf. FormArranger)
-	// - Probability based on time to change (Already done? - Better document variables)
-	
 	private static final double FRET_PROBABILITY_MEAN = 125.0;
 	private static final double FRET_PROBABILIY_DEV = 175.0;
 	private static final double FRET_DURATION_MEAN = 0.1;
@@ -39,7 +35,7 @@ public class BasicFourBeatGuitarMusician extends Musician {
 	private static final int FRET_PITCH_MIN = 20;
 	private static final int FRET_PITCH_MAX = 100;
 	
-	private Random random = new Random();
+	private final Random random = new Random();
 
 	@Override
 	protected void createElements(Bar bar) throws InvalidMidiDataException {
@@ -69,7 +65,9 @@ public class BasicFourBeatGuitarMusician extends Musician {
 			addElement(new MidiNoteElement(notePitch, start, 0.5 * 0.75, 80, 127));
 			addElement(new MidiNoteElement(notePitch, start + 0.5, 0.5 * 0.75, 65, 127));
 		}
-		addFretNoise(start + 0.5 + 0.5 * 0.75, 0.5 * 0.25, msPerBar);
+		if (isChangeAfter(chord)) {
+			addFretNoise(start + 0.5 + 0.5 * 0.75, 0.5 * 0.25, msPerBar);
+		}
 	}
 
 	private void addHalfBar(Chord chord, double start, long msPerBar) throws InvalidMidiDataException {
@@ -78,7 +76,9 @@ public class BasicFourBeatGuitarMusician extends Musician {
 			addElement(new MidiNoteElement(notePitch, start, 0.25 * 0.75, 82, 127));
 			addElement(new MidiNoteElement(notePitch, start + 0.25, 0.25 * 0.75, 50, 127));
 		}
-		addFretNoise(start + 0.25 + 0.25 * 0.75, 0.25 * 0.25, msPerBar);
+		if (isChangeAfter(chord)) {
+			addFretNoise(start + 0.25 + 0.25 * 0.75, 0.25 * 0.25, msPerBar);
+		}
 	}
 	
 	private void addQuarterBar(Chord chord, double start, long msPerBar) throws InvalidMidiDataException {
@@ -86,9 +86,19 @@ public class BasicFourBeatGuitarMusician extends Musician {
 		for (NotePitch notePitch : voicing) {
 			addElement(new MidiNoteElement(notePitch, start, 0.25 * 0.75, 87, 127));
 		}
-		addFretNoise(start + 0.25 * 0.75, 0.25 * 0.25, msPerBar);
+		if (isChangeAfter(chord)) {
+			addFretNoise(start + 0.25 * 0.75, 0.25 * 0.25, msPerBar);
+		}
 	}
 
+	private boolean isChangeAfter(Chord chord) {
+		ProgressionAnnotation progressionAnnotation = chord.getAnnotation(ProgressionAnnotation.class);
+		if (progressionAnnotation == null) {
+			return false;
+		}
+		return progressionAnnotation.isChangeAfter();
+	}
+	
 	private long getMsPerBar(Bar bar) {
 		BandAnnotation bandAnnotation = bar.getAnnotation(BandAnnotation.class);
 		if (bandAnnotation == null) {
@@ -101,6 +111,7 @@ public class BasicFourBeatGuitarMusician extends Musician {
 		if (random.nextGaussian() * FRET_PROBABILIY_DEV + FRET_PROBABILITY_MEAN <= (duration * msPerBar)) {
 			return;
 		}
+		
 		double startMean = start + duration / 2;
 		double startDev = duration / 6;
 				

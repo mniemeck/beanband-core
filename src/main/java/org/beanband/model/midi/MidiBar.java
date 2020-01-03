@@ -39,8 +39,6 @@ public class MidiBar {
 	 * Creates a new {@code MidiTrack} and attaches it to the list of tracks of this
 	 * {@code MidiBar}.
 	 * 
-	 * @param instrumentPatch The {@code InstrumentPatch} that should be associated
-	 *                        with the new {@code MidiTrack}.
 	 * @return The newly created {@code MidiTrack}.
 	 */
 	public MidiTrack addTrack() {
