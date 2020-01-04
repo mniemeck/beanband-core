@@ -1,5 +1,7 @@
 package org.beanband.arranger.basic;
 
+import java.util.List;
+
 import javax.sound.midi.InvalidMidiDataException;
 
 import org.beanband.arranger.Arranger;
@@ -35,26 +37,15 @@ public class BassLineArranger extends Arranger {
 
 		for (Bar bar : song.getBars()) {
 			for (Chord chord : bar.getChords()) {
-				Note note = getBassNote(chord);
-				if (note != null) {
-					NotePitch notePitch = movePitchInRange(getNearestPitch(note, referencePitch), lowestPitch,
+				List<Note> scale = chord.getAnnotationDefault(ScaleAnnotation.class).getScale(ScaleType.BASS_NOTE);
+				if (!scale.isEmpty()) {
+					NotePitch notePitch = movePitchInRange(getNearestPitch(scale.get(0), referencePitch), lowestPitch,
 							highestPitch);
 					chord.getOrCreateAnnotation(VoicingAnnotation.class).addNotePitch(VoicingType.BASS_BASIC, notePitch);
 					referencePitch = notePitch;
 				}
 			}
 		}
-	}
-
-	private Note getBassNote(Chord chord) {
-		ScaleAnnotation scaleAnnotation = chord.getAnnotation(ScaleAnnotation.class);
-		if (scaleAnnotation == null) {
-			return null;
-		}
-		if (scaleAnnotation.getScale(ScaleType.BASS_NOTE).isEmpty()) {
-			return null;
-		}
-		return scaleAnnotation.getScale(ScaleType.BASS_NOTE).get(0);
 	}
 
 	private NotePitch getNearestPitch(Note note, NotePitch referencePitch) throws InvalidMidiDataException {

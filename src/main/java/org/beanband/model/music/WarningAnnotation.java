@@ -40,7 +40,22 @@ public class WarningAnnotation extends MusicAnnotation<Annotatable> {
 
 	@Override
 	public String toString() {
-		return super.toString() + messages.size() + " warning messages registered.";
+		StringBuilder stringBuilder = new StringBuilder(super.toString());
+		for (String string : messages) {
+			stringBuilder.append("[");
+			String[] words = string.split("\\s+");
+			stringBuilder.append(words[0]);
+			if (words.length > 1) {
+				stringBuilder.append(" ");
+				stringBuilder.append(words[1]);
+			}
+			if (words.length > 2) {
+				stringBuilder.append(" ...");
+			}
+			stringBuilder.append("]");
+		}
+		return stringBuilder.toString();
+//		return super.toString() + messages.size() + " warning messages registered.";
 	}
 
 }

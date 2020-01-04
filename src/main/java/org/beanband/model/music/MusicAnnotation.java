@@ -1,5 +1,9 @@
 package org.beanband.model.music;
 
+import java.lang.reflect.InvocationTargetException;
+import java.util.HashMap;
+import java.util.Map;
+
 import org.beanband.arranger.Arranger;
 import org.beanband.band.Band;
 
@@ -25,6 +29,40 @@ import org.beanband.band.Band;
  * @see Band
  */
 public abstract class MusicAnnotation<T extends Annotatable> {
+
+	private static final Map<Class<?>, MusicAnnotation<?>> defaultInstanceMap = new HashMap<>();
+
+	/**
+	 * Returns the default instance of the {@code MusicAnnotation} of the specified
+	 * type. For every class of {@code MusicAnnotation}, only one singleton instance
+	 * is kept. <strong>The instance is created using the default constructor, so
+	 * make sure that every subclass implements reasonable default behaviour when
+	 * created in this way.</strong>
+	 * 
+	 * @param <T>        The {@code Annotatable} type parameter of the
+	 *                   {@code MusicAnnotation} type.
+	 * @param annotation The type of {@code MusicAnnotation} to retrieve.
+	 * @return The default instance of the specified type.
+	 * @see Annotatable#getAnnotationDefault(Class)
+	 */
+	public static final <T extends MusicAnnotation<?>> T getDefaultAnnotation(Class<T> annotation) {
+		T musicAnnotation = annotation.cast(defaultInstanceMap.get(annotation));
+		if (musicAnnotation == null) {
+			synchronized (MusicAnnotation.class) {
+				musicAnnotation = annotation.cast(defaultInstanceMap.get(annotation));
+				if (musicAnnotation == null) {
+					try {
+						musicAnnotation = annotation.getDeclaredConstructor().newInstance();
+					} catch (InstantiationException | IllegalAccessException | IllegalArgumentException
+							| InvocationTargetException | NoSuchMethodException | SecurityException e) {
+						throw new UnsupportedOperationException(e);
+					}
+					defaultInstanceMap.put(annotation, musicAnnotation);
+				}
+			}
+		}
+		return musicAnnotation;
+	}
 
 	/**
 	 * Returns a textual representation of the contents of this

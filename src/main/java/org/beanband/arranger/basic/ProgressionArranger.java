@@ -20,8 +20,8 @@ public class ProgressionArranger extends Arranger {
 
 	@Override
 	public void annotate(Song song) throws InvalidMidiDataException {
-		// TODO Enhance to detect more sophisticated harmonic function information (e.g.
-		// roman numeral annotations)
+		// TODO Enhance to detect more sophisticated harmonic function information
+		// (roman numeral annotations, ...)
 		annotateChordChanges(song);
 	}
 

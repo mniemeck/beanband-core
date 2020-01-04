@@ -34,8 +34,7 @@ public class BasicFourBeatDrumsMusician extends PercussionMusician {
 
 	@Override
 	protected void createElements(Bar bar) throws InvalidMidiDataException {
-		FormAnnotation annotation = bar.getAnnotation(FormAnnotation.class);
-		if ((annotation != null) && annotation.isNoChord()) {
+		if (bar.getAnnotationDefault(FormAnnotation.class).isNoChord()) {
 			addRandomizedElement(PercussionKey.ACOUSTIC_BASS_DRUM, 0.0, 120);
 			addRandomizedElement(PercussionKey.ACOUSTIC_SNARE, 0.625, 120);
 			addRandomizedElement(PercussionKey.ACOUSTIC_SNARE, 0.75, 120);
@@ -70,7 +69,7 @@ public class BasicFourBeatDrumsMusician extends PercussionMusician {
 				break;
 			}
 		}
-		if ((annotation != null) && annotation.isLastBar()) {
+		if (bar.getAnnotationDefault(FormAnnotation.class).isLastBar()) {
 			addRandomizedElement(PercussionKey.CRASH_CYMBAL_1, 1.0, 120);
 		}
 	}

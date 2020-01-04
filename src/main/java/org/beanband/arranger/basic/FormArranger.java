@@ -26,7 +26,7 @@ public class FormArranger extends Arranger {
 
 	@Override
 	public void annotate(Song song) throws InvalidMidiDataException {
-		// TODO Enhance to actually detect formal features of the leadsheet (intros,
+		// TODO Enhance to detect formal features of the leadsheet (intros,
 		// chorusses, bridges, breaks, etc.)
 
 		annotateChordChanges(song);
@@ -42,7 +42,7 @@ public class FormArranger extends Arranger {
 			} else {
 				numBars++;
 				for (Chord chord : bar.getChords()) {
-					if (isChangeAfter(chord)) {
+					if (chord.getAnnotationDefault(ProgressionAnnotation.class).isChangeAfter()) {
 						numChanges++;
 					}
 				}
@@ -52,10 +52,10 @@ public class FormArranger extends Arranger {
 		double averageChanges = Math.rint((double) numChanges / (double) numBars);
 		List<Bar> barsToAnnotate = new ArrayList<>();
 		for (Bar bar : song.getBars()) {
-			if ((bar.getChords().size() != 1) || isChangeBefore(bar.getChords().get(0))) {
+			if ((bar.getChords().size() != 1) || bar.getChords().get(0).getAnnotationDefault(ProgressionAnnotation.class).isChangeBefore()) {
 				for (Bar barToAnnotate : barsToAnnotate) {
-					barToAnnotate.getOrCreateAnnotation(FormAnnotation.class)
-					.setChangeRatio(barToAnnotate.getChords().size() / (averageChanges * barsToAnnotate.size()));
+					barToAnnotate.getOrCreateAnnotation(FormAnnotation.class).setChangeRatio(
+							barToAnnotate.getChords().size() / (averageChanges * barsToAnnotate.size()));
 				}
 				barsToAnnotate.clear();
 			}
@@ -63,7 +63,7 @@ public class FormArranger extends Arranger {
 		}
 		for (Bar barToAnnotate : barsToAnnotate) {
 			barToAnnotate.getOrCreateAnnotation(FormAnnotation.class)
-			.setChangeRatio(barToAnnotate.getChords().size() / (averageChanges * barsToAnnotate.size()));
+					.setChangeRatio(barToAnnotate.getChords().size() / (averageChanges * barsToAnnotate.size()));
 		}
 	}
 
@@ -74,22 +74,6 @@ public class FormArranger extends Arranger {
 			}
 		}
 		return true;
-	}
-	
-	private boolean isChangeAfter(Chord chord) {
-		ProgressionAnnotation progressionAnnotation = chord.getAnnotation(ProgressionAnnotation.class);
-		if (progressionAnnotation == null) {
-			return false;
-		}
-		return progressionAnnotation.isChangeAfter();
-	}
-
-	private boolean isChangeBefore(Chord chord) {
-		ProgressionAnnotation progressionAnnotation = chord.getAnnotation(ProgressionAnnotation.class);
-		if (progressionAnnotation == null) {
-			return false;
-		}
-		return progressionAnnotation.isChangeBefore();
 	}
 
 	private void annotateLastBar(Song song) {

@@ -29,9 +29,10 @@ public class ScaleArranger extends Arranger {
 		}
 
 		// TODO Enhance to calculate SCALE_NOTES. Construct based on chord functions.
-		// Default tones based on 3 and 5, altered by chord functions.
+		// Default tones based on 3 and 5, altered by chord functions. Alternatively
+		// based on ProgressionAnnotation.
 
-		// TODO Enhance to include various function (e.g. lead) notes based on context,
+		// TODO Enhance to include various special function notes based on context,
 		// maybe based on ProgressionAnnotation.
 	}
 

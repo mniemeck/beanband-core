@@ -72,6 +72,6 @@ public class StyleChange extends SongElement {
 	 */
 	@Override
 	public String toString() {
-		return "StyleChange [" + style + ":" + tempo + "]" + super.toString() + "]";
+		return "StyleChange [" + style + ":" + tempo + "]" + super.toString();
 	}
 }

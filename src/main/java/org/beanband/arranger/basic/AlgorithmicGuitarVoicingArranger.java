@@ -1,7 +1,6 @@
 package org.beanband.arranger.basic;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 import javax.sound.midi.InvalidMidiDataException;
@@ -61,7 +60,7 @@ public class AlgorithmicGuitarVoicingArranger extends Arranger {
 			for (Chord chord : bar.getChords()) {
 				double bestScore = 0.0;
 				List<NotePitch> bestFingering = null;
-				
+
 				for (List<NotePitch> fingering : getFingerings()) {
 					double score = scoreFingering(fingering, chord, previousFingering);
 					if (score > bestScore) {
@@ -108,7 +107,7 @@ public class AlgorithmicGuitarVoicingArranger extends Arranger {
 		}
 		return fingerPositions;
 	}
-	
+
 	private List<int[]> getSecondFingerPositions(int deadStrings, int firstFingerString, int firstFingerFret) {
 		List<int[]> fingerPositions = new ArrayList<>();
 		for (int fret = SECOND_FINGER_MIN_FRET; fret <= SECOND_FINGER_MAX_FRET; fret++) {
@@ -118,14 +117,16 @@ public class AlgorithmicGuitarVoicingArranger extends Arranger {
 					fingerPosition[firstFingerString] += firstFingerFret;
 					fingerPosition[string] += fret;
 					fingerPositions.add(fingerPosition);
-					fingerPositions.addAll(getThirdFingerPositions(deadStrings, firstFingerString, firstFingerFret, string, fret));
+					fingerPositions.addAll(
+							getThirdFingerPositions(deadStrings, firstFingerString, firstFingerFret, string, fret));
 				}
 			}
 		}
 		return fingerPositions;
 	}
 
-	private List<int[]> getThirdFingerPositions(int deadStrings, int firstFingerString, int firstFingerFret, int secondFingerString, int secondFingerFret) {
+	private List<int[]> getThirdFingerPositions(int deadStrings, int firstFingerString, int firstFingerFret,
+			int secondFingerString, int secondFingerFret) {
 		List<int[]> fingerPositions = new ArrayList<>();
 		for (int fret = THIRD_FINGER_MIN_FRET; fret <= THIRD_FINGER_MAX_FRET; fret++) {
 			for (int string = Math.max(deadStrings, THIRD_FINGER_MIN_STRING); string < BASIC_TUNING.length; string++) {
@@ -144,9 +145,9 @@ public class AlgorithmicGuitarVoicingArranger extends Arranger {
 	private double scoreFingering(List<NotePitch> fingering, Chord chord, List<NotePitch> previousFingering) {
 		double score = 0.0;
 
-		List<Note> chordNotes = getChordNotes(chord);
 		for (NotePitch notePitch : fingering) {
-			score += scoreChordNotes(notePitch, chordNotes);
+			score += scoreChordNotes(notePitch,
+					chord.getAnnotationDefault(ScaleAnnotation.class).getScale(ScaleType.CHORD_NOTES));
 		}
 		if (previousFingering != null) {
 			score += scoreDistance(fingering, previousFingering);
@@ -166,14 +167,6 @@ public class AlgorithmicGuitarVoicingArranger extends Arranger {
 		return SCORE_WRONG_NOTE;
 	}
 
-	private List<Note> getChordNotes(Chord chord) {
-		ScaleAnnotation scaleAnnotation = chord.getAnnotation(ScaleAnnotation.class);
-		if (scaleAnnotation == null) {
-			return Collections.emptyList();
-		}
-		return scaleAnnotation.getScale(ScaleType.CHORD_NOTES);
-	}
-	
 	private double scoreDistance(List<NotePitch> fingering, List<NotePitch> previousFingering) {
 		NotePitch topNote = fingering.get(fingering.size() - 1);
 		NotePitch previousTopNote = previousFingering.get(previousFingering.size() - 1);

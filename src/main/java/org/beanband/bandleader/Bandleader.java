@@ -94,23 +94,17 @@ public class Bandleader {
 			int lineNumber = song.getElements().indexOf(element) + 1;
 			if (element instanceof Bar) {
 				Bar bar = (Bar) element;
-				if (bar.getAnnotation(WarningAnnotation.class) != null) {
-					bar.getAnnotation(WarningAnnotation.class).getMessages()
-							.forEach(m -> logger.warning("Bar " + lineNumber + ": " + m));
-				}
+				bar.getAnnotationDefault(WarningAnnotation.class).getMessages()
+						.forEach(m -> logger.warning("Bar " + lineNumber + ": " + m));
 				bar.getChords().forEach(c -> {
 					int chordNumber = bar.getChords().indexOf(c) + 1;
-					if (c.getAnnotation(WarningAnnotation.class) != null) {
-						c.getAnnotation(WarningAnnotation.class).getMessages()
-								.forEach(m -> logger.warning("Bar " + lineNumber + ":Chord " + chordNumber + ": " + m));
-					}
+					c.getAnnotationDefault(WarningAnnotation.class).getMessages()
+							.forEach(m -> logger.warning("Bar " + lineNumber + ":Chord " + chordNumber + ": " + m));
 				});
 			} else if (element instanceof StyleChange) {
 				StyleChange styleChange = (StyleChange) element;
-				if (styleChange.getAnnotation(WarningAnnotation.class) != null) {
-					styleChange.getAnnotation(WarningAnnotation.class).getMessages()
-							.forEach(m -> logger.warning("Style Change " + lineNumber + ": " + m));
-				}
+				styleChange.getAnnotationDefault(WarningAnnotation.class).getMessages()
+						.forEach(m -> logger.warning("Style Change " + lineNumber + ": " + m));
 			}
 		}
 	}

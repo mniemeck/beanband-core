@@ -57,6 +57,27 @@ public abstract class Annotatable {
 	}
 
 	/**
+	 * Returns the {@code MusicAnnotation} of the specified type. If it is not
+	 * already attached to this {@code Annotatable}, a default instance is returned.
+	 * <strong>This instance is not attached to the {@Annotatable} and is only
+	 * instantiated once per type of {@code MusicAnnotation}.</strong>
+	 * 
+	 * @param <T>        The {@code Annotatable} type parameter of the
+	 *                   {@code MusicAnnotation} type.
+	 * @param annotation The type of {@code MusicAnnotation} to retrieve.
+	 * @return The instance of the specified type, if it has already been attached
+	 *         to this {@code Annotatable}, or a new one otherwise.
+	 * @see MusicAnnotation#getDefaultAnnotation(Class)
+	 */
+	public final <T extends MusicAnnotation<?>> T getAnnotationDefault(Class<T> annotation) {
+		T musicAnnotation = getAnnotation(annotation);
+		if (musicAnnotation == null) {
+			return MusicAnnotation.getDefaultAnnotation(annotation);
+		}
+		return musicAnnotation;
+	}
+
+	/**
 	 * Returns a textual representation of the {@code MusicAnnotation} objects
 	 * attached to this {@code Annotatable}. Subclasses should override
 	 * {@code toString} to return any information specific to their implementation.

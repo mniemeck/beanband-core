@@ -52,24 +52,24 @@ public class BasicFourBeatBassMusician extends Musician {
 	}
 
 	private void addStrongHalfBar(Chord chord, double start) throws InvalidMidiDataException {
-		NotePitch bassNote = extractBassNote(chord);
-		if (bassNote != null) {
-			addRandomizedElement(bassNote, start + 0.0, 0.375 * 0.75, 120);
-			addRandomizedElement(bassNote, start + 0.375, 0.125 * 0.75, 100);
+		List<NotePitch> voicing = chord.getAnnotationDefault(VoicingAnnotation.class).getVoicing(VoicingType.BASS_BASIC);
+		if (!voicing.isEmpty()) {
+			addRandomizedElement(voicing.get(0), start + 0.0, 0.375 * 0.75, 120);
+			addRandomizedElement(voicing.get(0), start + 0.375, 0.125 * 0.75, 100);
 		}
 	}
 
 	private void addWeakHalfBar(Chord chord, double start) throws InvalidMidiDataException {
-		NotePitch bassNote = extractBassNote(chord);
-		if (bassNote != null) {
-			addRandomizedElement(bassNote, start + 0.0, 0.375 * 0.75, 122);
+		List<NotePitch> voicing = chord.getAnnotationDefault(VoicingAnnotation.class).getVoicing(VoicingType.BASS_BASIC);
+		if (!voicing.isEmpty()) {
+			addRandomizedElement(voicing.get(0), start + 0.0, 0.375 * 0.75, 122);
 		}
 	}
 	
 	private void addQuarterBar(Chord chord, double start) throws InvalidMidiDataException {
-		NotePitch bassNote = extractBassNote(chord);
-		if (bassNote != null) {
-			addRandomizedElement(bassNote, start + 0.0, 0.25 * 0.75, 125);
+		List<NotePitch> voicing = chord.getAnnotationDefault(VoicingAnnotation.class).getVoicing(VoicingType.BASS_BASIC);
+		if (!voicing.isEmpty()) {
+			addRandomizedElement(voicing.get(0), start + 0.0, 0.25 * 0.75, 125);
 		}
 	}
 
@@ -84,17 +84,5 @@ public class BasicFourBeatBassMusician extends Musician {
 
 		addElement(new MidiNoteElement(pitch, actualStart, actualDuration, actualOnVelocity, actualOffVelocity));
 	}
-
-	private NotePitch extractBassNote(Chord chord) {
-		VoicingAnnotation voicingAnnotation = chord.getAnnotation(VoicingAnnotation.class);
-		if (voicingAnnotation == null) {
-			return null;
-		}
-		List<NotePitch> voicing = voicingAnnotation.getVoicing(VoicingType.BASS_BASIC);
-		if (voicing.isEmpty()) {
-			return null;
-		}
-		return voicing.get(0);
-	}
-
+//
 }
