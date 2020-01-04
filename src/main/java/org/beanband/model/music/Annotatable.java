@@ -59,7 +59,7 @@ public abstract class Annotatable {
 	/**
 	 * Returns the {@code MusicAnnotation} of the specified type. If it is not
 	 * already attached to this {@code Annotatable}, a default instance is returned.
-	 * <strong>This instance is not attached to the {@Annotatable} and is only
+	 * <strong>This instance is not attached to the {@code Annotatable} and is only
 	 * instantiated once per type of {@code MusicAnnotation}.</strong>
 	 * 
 	 * @param <T>        The {@code Annotatable} type parameter of the

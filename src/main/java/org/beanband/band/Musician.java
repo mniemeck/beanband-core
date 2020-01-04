@@ -44,4 +44,8 @@ public abstract class Musician {
 	protected final void addElement(MidiElement element) {
 		elements.add(element);
 	}
+	
+	protected final void addElement(Collection<MidiElement> element) {
+		elements.addAll(element);
+	}
 }

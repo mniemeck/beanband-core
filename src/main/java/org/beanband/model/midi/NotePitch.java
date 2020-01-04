@@ -56,7 +56,7 @@ public class NotePitch extends Pitch {
 	 *                                  range (0-127).
 	 */
 	public NotePitch(int pitch) throws InvalidMidiDataException {
-		if ((pitch < 0) && (pitch > 127)) {
+		if ((pitch < 0) || (pitch > 127)) {
 			throw new InvalidMidiDataException(
 					"Notes below C0 (0) or above G12 (127) are not supported by the MIDI standard.");
 		}
