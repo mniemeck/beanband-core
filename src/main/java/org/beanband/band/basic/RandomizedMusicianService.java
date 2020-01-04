@@ -307,7 +307,7 @@ public class RandomizedMusicianService {
 
 		double actualStart = Math.max(0.00025, random.nextGaussian() * startDev + startMean);
 
-		double durationMean = duration / 2;
+		double durationMean = duration / 5;
 		double durationDev = duration / 100;
 
 		double actualDuration = random.nextGaussian() * durationDev + durationMean;
@@ -317,7 +317,7 @@ public class RandomizedMusicianService {
 		List<MidiElement> elements = new ArrayList<>();
 		elements.add(new MidiProgramChangeElement(InstrumentPatch.GUITAR_FRET_NOISE, actualStart - 0.01));
 		elements.add(new MidiNoteElement(actualPitch, actualStart, actualDuration, 64, 0));
-		elements.add(new MidiProgramChangeElement(fretOriginalPatch, actualStart + 0.01));
+		elements.add(new MidiProgramChangeElement(fretOriginalPatch, actualStart + actualDuration + 0.01));
 		return elements;
 	}
 

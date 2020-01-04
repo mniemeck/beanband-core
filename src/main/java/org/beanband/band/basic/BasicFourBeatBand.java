@@ -10,8 +10,6 @@ import org.beanband.band.Band;
  *
  */
 public class BasicFourBeatBand extends Band {
-	// TODO Create BasicFourBeatPianoMusician
-
 	private static final String STYLE_NAME = "BasicFourBeat";
 	private static final double BEATS_PER_BAR = 4;
 	private static final int[] ALLOWED_CHANGES = { 1, 2, 4 };
@@ -35,6 +33,7 @@ public class BasicFourBeatBand extends Band {
 	protected void createMusicians() {
 		addMusician(new BasicFourBeatBassMusician());
 		addMusician(new BasicFourBeatGuitarMusician());
+		addMusician(new BasicFourBeatPianoMusician());
 		addLeadMusician(new BasicFourBeatDrumsMusician());
 	}
 

@@ -5,5 +5,3 @@
  * @author Michael Niemeck
  */
 package org.beanband.band.basic;
-
-// TODO Create BasicThreeBeat Band, start extracting functionality into superclasses.

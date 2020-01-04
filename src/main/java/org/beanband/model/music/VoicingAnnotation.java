@@ -45,9 +45,14 @@ public class VoicingAnnotation extends MusicAnnotation<Chord> {
 		/**
 		 * A basic voicing for guitar. Contains up to six pitches.
 		 */
-		GUITAR_BASIC;
+		GUITAR_BASIC,
+		/**
+		 * A basic voicing for the piano. Currently only contains the chord notes for
+		 * the right hand.
+		 */
+		PIANO_BASIC;
 	}
-	
+
 	private final Map<VoicingType, List<NotePitch>> voicings = new HashMap<>();
 
 	/**
