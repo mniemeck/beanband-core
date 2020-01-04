@@ -22,7 +22,9 @@ public abstract class PercussionMusician extends Musician {
 	/**
 	 * The music making up the <em>count-in</em> before the first bar. They will be
 	 * put at the beginning of the generated {@code Sequence} and should stay within
-	 * the limit specified by {@code getCountInBeats}.
+	 * the limit specified by {@code getCountInBeats}. Note that the count-in will
+	 * be generated as one {@code MidiBar} of the specified length, so duration
+	 * fractions are always relative to the entire count-in.
 	 * 
 	 * @return A {@code Collection} of {@code MidiElement} objects representing the
 	 *         count-in.
@@ -32,7 +34,7 @@ public abstract class PercussionMusician extends Musician {
 	public abstract Collection<MidiElement> getCountIn() throws InvalidMidiDataException;
 
 	/**
-	 * Returns the length of the count-in in <em>beats</em>
+	 * Returns the length of the count-in bar in <em>beats</em>
 	 * 
 	 * @return The length of the count-in in beats. Although this is typically an
 	 *         integer, it is also possible to return any {@code double} value.

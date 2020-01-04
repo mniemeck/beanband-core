@@ -33,7 +33,6 @@ public class BasicFourBeatBand extends Band {
 	protected void createMusicians() {
 		addMusician(new BasicFourBeatBassMusician());
 		addMusician(new BasicFourBeatGuitarMusician());
-		addMusician(new BasicFourBeatPianoMusician());
 		addLeadMusician(new BasicFourBeatDrumsMusician());
 	}
 
