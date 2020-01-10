@@ -22,6 +22,9 @@ public class ProgressionArranger extends Arranger {
 	public void annotate(Song song) throws InvalidMidiDataException {
 		// TODO Enhance to detect more sophisticated harmonic function information
 		// (roman numeral annotations, ...)
+
+		// Choi A. 2011. "Jazz Harmonic Analysis as Optimal Tonality Segmentation."
+		// <em>Computer Music Journal</em> 35[2]:49-66.
 		annotateChordChanges(song);
 	}
 

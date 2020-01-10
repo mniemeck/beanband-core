@@ -18,7 +18,7 @@ Bb.maj7
 A.min.7.b5
 D.7.#9
 G.min.7
-A.7.sus4 A.7.#9.#11.#13
+A.7.sus4 A.7.#9.#11.b13
 D.min
 D.min./C
 B.min.7.b5
