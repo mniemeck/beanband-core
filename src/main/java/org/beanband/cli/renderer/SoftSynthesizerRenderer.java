@@ -48,8 +48,6 @@ public class SoftSynthesizerRenderer {
 	 * Renders the MIDI {@code Sequence} into the specified {@code File}.
 	 * 
 	 * @param sequence The MIDI {@code Sequence} to render.
-	 * @param file     The {@code File} in which to write the {@code Sequence}. Must
-	 *                 be existing and writable.
 	 * @throws MidiUnavailableException When there are problems obtaining the
 	 *                                  correct MIDI devices.
 	 * @throws InvalidMidiDataException When there are problems in the
