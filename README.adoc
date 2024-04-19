@@ -1,5 +1,9 @@
 = BeanBand
 
+IMPORTANT: Due to lack of ressources as well as some excellent competition,
+this project is archived until further notice. If you are interest in picking
+it up again, please contact the creator.
+
 The *BeanBand* project aims to create a high-quality music accompaniment
 software package.  The current focus is to provide a stable architecture that
 focuses primarily on the musical quality of the generated playbacks.
